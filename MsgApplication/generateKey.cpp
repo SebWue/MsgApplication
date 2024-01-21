@@ -1,11 +1,8 @@
 #include <Windows.h>
 #include <math.h>
-#include <tchar.h>
 #include <iostream>
 #include <vector>
-#include <tgmath.h>
-#include <stdio.h>
-#include <fstream>
+#include <fstream>			//not used, there for writing into a file, like a .txt
 #include "generateKey.h"
 
 using namespace std;

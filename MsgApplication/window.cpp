@@ -5,8 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <Windows.h>
-#include <tchar.h>
-#include <WindowsX.h>
+#include <WindowsX.h> // mouse tracker
 
 using namespace std;
 #include "calcW.h"
