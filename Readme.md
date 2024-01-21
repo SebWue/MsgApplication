@@ -18,9 +18,9 @@ Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welc
 - thread -> benutzt für die Gleichzeitige Erstellung von dem Fenster und dem Schüssel
 - iostream -> "Standart" Bibilotek, vereinfacht die Ausgabe von Text, Variablen, usw...; Viele andere Bibiloteken bauen auf ihr auf
 - vector -> auch Liste genannt, dynamisches Array, was die Handhabung von Arrays einfacher macht (keine statische Größe, mehr möglichkeiten mit den daten zu interagieren(.push_back(); .size(); .clear(); ...), ...)
-- chrono -> used to get execution times
-- math.h -> used for pow(x,y) only
-- WindowsX.h -> Used to get Mouse position out of the System message (GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam))
+- chrono -> benutzt um die Ausführungszeit eines Programmabschnittes zu bekommen
+- math.h -> nur für pow(x,y) benutzt
+- WindowsX.h -> Benutzt um die X und Y Koordinaten aus der System-Nachicht zu bekommen, welche bei einem Mausklick abgeschickt wird (GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam))
 
 ## Erklärung der einzelnen Klassen (chronoligisch)
 
