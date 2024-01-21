@@ -1,7 +1,7 @@
 # Dokumentation MsgApplication
 
 ## Prinzip des Programmes
-Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-VerschlÃ¼sselung verschlÃ¼sselt wird.
+Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird.
 
 ## Benutzte Klassen
 ### Auflistung aller benutzten Klassen in dem Programm
@@ -12,7 +12,7 @@ Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welc
 - endecrypt.cpp
 - window.cpp
 
-## Erklärung der einzelnen Klassen
+## Erklärung der einzelnen Klassen (chronoligisch)
 
 ### MsgApplication.cpp
 Main Klasse. Das Programm startet hier und ruft die anderen Klassen auf.
@@ -32,7 +32,8 @@ Sollte kein Schlüssel vorliegen (kann es noch gar nicht), wird die Funktion gene
 Anschließend werden die generierten Werte in die Funktion der Klasse endecrypt()
 
 `void generateKey::generate()`
-Wird von der Funktion newThreadToCheck
+Wird von der Funktion newThreadToCheck aufgerufen, sollte kein Schlüssel gefunden worden sein. Sie generiert ein Schlüsselpaar, weches im weitern Verlauf des Programmes zum Ver- und Entschlüsseln genutzt wird.
+
 
 ### calcW.cpp
 Klasse 
