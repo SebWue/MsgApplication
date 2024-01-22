@@ -113,7 +113,7 @@ void generateKey::generate(){
 		}
 		else { d = ind; }
 	} while (m > 6000);
-	cout <<"        q:   " << q << "   p:   " << p << "   n:   " << n << "   m:  "<< m << "     e:    " << e << " d: " << d << "    \n";
+	cout <<"q:   " << q << "   p:   " << p << "   n:   " << n << "   m:  "<< m << "     e:    " << e << " d: " << d << "    \n";
 
 	wfstream keys;
 	keys.open("keys.txt");
