@@ -43,9 +43,11 @@ void generateKey::generate(){
 		for (int i = 2; i < 20000; i++) {
 			isnotprime = true;
 			while (isnotprime) {
+
 				if (i > mcurr) {
 					break;
 				}
+
 				else {
 					if (mcurr % i == 0) {
 						mcurr /= i;
@@ -57,7 +59,11 @@ void generateKey::generate(){
 				}
 			}
 		}
-
+		cout << endl;
+		for (int i = 0; i < partofm.size(); i++) {
+			cout << partofm[i] << " ";
+		}
+		cout << endl;
 		//checking if e is smaller than m and not part of the divisor list from m
 		BOOL running = true;
 		while (running) {
@@ -69,6 +75,7 @@ void generateKey::generate(){
 				}
 			}
 		}
+
 
 		// Eukliclidischer Algorithmus to calculate d
 		BOOL fin = false;
