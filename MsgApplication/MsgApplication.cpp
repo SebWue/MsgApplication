@@ -23,7 +23,6 @@ int main()
 	cout << processor_count << endl;*/
 
 	thread t3(&generateKey::newThreadToCheck, &keyget);
-	window.create();
 
 	t3.join();
 }
