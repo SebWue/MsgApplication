@@ -112,7 +112,7 @@ void generateKey::generate(){
 			d = ind + m;
 		}
 		else { d = ind; }
-	} while (m > 6000);
+	} while (m > 60000000);
 	cout <<"q:   " << q << "   p:   " << p << "   n:   " << n << "   m:  "<< m << "     e:    " << e << " d: " << d << "    \n";
 
 	wfstream keys;
