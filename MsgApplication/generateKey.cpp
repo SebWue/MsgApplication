@@ -119,12 +119,14 @@ void generateKey::generate(){
 			d = ind + m;
 		}
 		else { d = ind; }
-	} while (m > 60000000);
+	} while (m > 6000);
 	cout <<"q:   " << q << "   p:   " << p << "   n:   " << n << "   m:  "<< m << "     e:    " << e << " d: " << d << "    \n";
 
 	wfstream keys;
 	keys.open("keys.txt");
-	keys << L"N" << n << "E" << e << "D" << d;
+	keys.clear();
+	keys << L"N" << n << ";E" << e << ";D" << d << ";";
+	keys.close();
 
 	pub2 = e;
 	priv2 = d;
@@ -136,7 +138,17 @@ BOOL keyExis = false;
 
 BOOL checkKey() {
 	BOOL keyThere = false;
-	keyExis = false;
+	wfstream keys;
+	keys.open("keys.txt");
+	string cs; //= getline();
+	if (cs.size() == NULL){
+		keyThere = false;
+	}
+	keys << "                                                                  ";
+	keys.close();
+
+	//if(keys.read())
+
 	return keyThere;
 }
 

@@ -25,7 +25,7 @@ Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welc
 ## Erklärung der einzelnen Klassen (chronoligisch)
 
 ### MsgApplication.cpp
-Main Klasse. Das Programm startet hier und ruft die anderen Klassen auf.
+Main Klasse. Das Programm startet hier und ruft die anderen Klassen auf.   
 
 `thread t3(&generateKey::newThreadToCheck,&keyget);`
 Erstellt einen neuen Thread, welcher parallel zum Main Thread das Schlüsselpaar generiert.
@@ -52,6 +52,10 @@ Die Kriterien die man beachten muss bei der generierung von `e` ist, das `e` Tei
 Um nun `e` tatsächlich bestimmen zu können, wählen wir Zufällig aus dem Vekor eine Primzahl aus, und gucken ob die Kriterien auf sie zutreffen.
 
 Nun fehlt uns nur noch der Wert `UINT d`, welcher hier der private Schlüssel ist.
+Um `d` uaszurechnen, benötigen wir zu erst einmal die Variablen `UINT tempe = e, tempm = m`, welche den gleichen Wert haben wie die nicht Temporären Variablen `e` und `m`,  da wir mit den Werten von `e` und `m` weiter rechnen müssen, aber nicht die originalen Werte verändern wollen. Deshalb erstellen wir temporäre Varíablen der beiden Werte.
+Auch bei `d` gibt es wieder Regeln die man bei der Berechnung beachten muss. So muss `d` genau wie `e` auch teilerfremd zu `m` sein. Eine Besonderheit ist jedoch das `d * e % m == 1` sein muss. Nun müssen wir den Eukidishen Algorithmus anwenden, um `d`zu bestimmen. Dazu teilen wir `e / m` und `e % m` die ergebnisse werden wie folgt verarbeitet: `e` nimmt nun den `m` Wert an, `m` wird zu dem ergebniss von `e % m` und wir speichern und die division von `e / m` in einem Vektor für später ab. Dies Wiederholen wir nun, bis `e % m == 0`.
+Nun Rechnen wir mit den Variablen `int a = 0, b = 1`. Diesen Variablen werden feste Startwerte zugewiesesn, `a` hat den Startwert 0 und `b` 1. Was wir nun machen ist, den alten `b` wert immer in `a` schreiben, und einen neuen `b` Wert durch die Formmel `b = a - (e/m * b)`. Es ist zwar nicht ersichtlich, welcher Wert `e / m`sein soll, aber dafür haben wir ja im vorherigen Schritt die ganzen werte von `e / m` in einen Vektor geschrieben. Für diesen Teil der Formel setzten wir also den schon berechnenten `e/m` Wert ein. Dies funktioniert indem man die Liste von dem letzten Wert hoch zum ersten läuft, da man diese Formel so oft ausrechnen muss, wie der Vektor lang ist.
+Der `d` Wert ist im anschluss dann eigentlich nurnoch der Wert, welcher bei `a` am Ende steht. Sollte dieser aber negativ sein, so müssen wir ihn noch mit `m` addieren um endlich `d` bestimmt zu haben.
 
 ### calcW.cpp
 Selbst erstellte Klasse zum Rechnen großen Zahlen mit Hilfe von Vektoren.
@@ -62,3 +66,4 @@ Schreibt einen Integer in einen Vektor, indem die Zahl modulo 10 (a % 10) gerech
 ### endecrypt.cpp
 
 ### window.cpp
+"Wichtigste" Klasse. Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
