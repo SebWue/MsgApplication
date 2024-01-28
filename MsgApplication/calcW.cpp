@@ -20,6 +20,7 @@ vector<int> calcW::turninttoarray(int a)
 	
 	return arrnum;
 }
+
 vector<int> calcW::lpow(vector<int> orignum, int power) {
 	vector<int> newnumber, oldnewnum;
 	int tempres, tempover;

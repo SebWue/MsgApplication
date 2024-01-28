@@ -1,5 +1,11 @@
 # Dokumentation MsgApplication
 
+## Anmerkungen Vorab
+
+Die Dokumente Server.cpp und Server.h sind noch nicht funktionstüchtig und können ignoriert werden, da sie vom Programm nicht aufgerufen werden.
+Sollte das Programm wärend der ausführung auf einmal nicht mehr funktionieren, könnte es sein, dass das Programm eine Library geschlossen hat, wodurch die eingabe nicht mehr funktioniert.
+
+
 ## Prinzip des Programmes
 Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird.
 
@@ -41,7 +47,7 @@ Klasse, die ausschließlich am Anfang des Programms aufgerufen wird, um die Schlü
 `void generateKey::newThreadToCheck()`
 Diese Funktion wird vom neu erstellten Thread aus MsgApplication aufgerufen. Sie prüft, ob schon ein Schlüssel vorliegt. Sollte dies nicht der Fall sein, wird ein neues Schlüsselpaar erstellt (bisher wird der generierte Schlüssel noch nicht gespeichert).
 Sollte kein Schlüssel vorliegen (kann es noch gar nicht), wird die Funktion generate() aufgerufen.
-Anschließend werden die generierten Werte in die Funktion der Klasse endecrypt()
+Anschließend werden die generierten Schlüssel in der Funktion der Klasse endecrypt() hineingegeben, welche diese dort Speichert und die Schlüssel nun benutzt werden können.
 
 `void generateKey::generate()`
 Wird von der Funktion `newThreadToCheck()` aufgerufen, sollte kein Schlüssel gefunden worden sein. Sie generiert ein Schlüsselpaar, welches im weitern Verlauf des Programmes zum Ver- und Entschlüsseln genutzt wird.
@@ -56,6 +62,7 @@ Um `d` uaszurechnen, benötigen wir zu erst einmal die Variablen `UINT tempe = e,
 Auch bei `d` gibt es wieder Regeln die man bei der Berechnung beachten muss. So muss `d` genau wie `e` auch teilerfremd zu `m` sein. Eine Besonderheit ist jedoch das `d * e % m == 1` sein muss. Nun müssen wir den Eukidishen Algorithmus anwenden, um `d`zu bestimmen. Dazu teilen wir `e / m` und `e % m` die ergebnisse werden wie folgt verarbeitet: `e` nimmt nun den `m` Wert an, `m` wird zu dem ergebniss von `e % m` und wir speichern und die division von `e / m` in einem Vektor für später ab. Dies Wiederholen wir nun, bis `e % m == 0`.
 Nun Rechnen wir mit den Variablen `int a = 0, b = 1`. Diesen Variablen werden feste Startwerte zugewiesesn, `a` hat den Startwert 0 und `b` 1. Was wir nun machen ist, den alten `b` wert immer in `a` schreiben, und einen neuen `b` Wert durch die Formmel `b = a - (e/m * b)`. Es ist zwar nicht ersichtlich, welcher Wert `e / m`sein soll, aber dafür haben wir ja im vorherigen Schritt die ganzen werte von `e / m` in einen Vektor geschrieben. Für diesen Teil der Formel setzten wir also den schon berechnenten `e/m` Wert ein. Dies funktioniert indem man die Liste von dem letzten Wert hoch zum ersten läuft, da man diese Formel so oft ausrechnen muss, wie der Vektor lang ist.
 Der `d` Wert ist im anschluss dann eigentlich nurnoch der Wert, welcher bei `a` am Ende steht. Sollte dieser aber negativ sein, so müssen wir ihn noch mit `m` addieren um endlich `d` bestimmt zu haben.
+Der allerletzte schritt ist nun, `n`, `e` und `d` in den Global definierten Variablen `UINT mod2, pub2, priv2` zu Speichern.
 
 ### calcW.cpp
 Selbst erstellte Klasse zum Rechnen großen Zahlen mit Hilfe von Vektoren.
@@ -63,7 +70,17 @@ Selbst erstellte Klasse zum Rechnen großen Zahlen mit Hilfe von Vektoren.
 `vector<int> calcW::turninttoarray(int a)`
 Schreibt einen Integer in einen Vektor, indem die Zahl modulo 10 (a % 10) gerechnet wird um die letzte (kleinste noch vorhandene Zahl) in den Vektor zu schreiben
 
+`vector<int> calcW::lpow(vector<int> orignum, int power)`
+Erweiterung des `pow()` Befehls. Es muss eine Zahl, welche in einem Vektor gespeichert wird, und die Zahl, mit welcher die Zahl hoch genommen wird, hereingegeben werden. Dies ermöglicht die Rechnung von z.B. 50234<sup>324232</sup>, wo das Ergebniss in einer üblichen Variablen Arten nicht gespeichert werden kann.
+Die Klasse ist selbst geschrieben und hat die meißte Zeit in Anspruch genommen.
+
+`int calcW::lmod(vector<int> orgnum, int divident)`
+Ermöglicht die Operation modulo `%` sodass sie auch an Arrays/Vektoren funktioniert.
+
 ### endecrypt.cpp
+
+Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
+
 
 ### window.cpp
 "Wichtigste" Klasse. Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
