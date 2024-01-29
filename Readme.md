@@ -83,4 +83,4 @@ Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
 
 
 ### window.cpp
-"Wichtigste" Klasse. Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
+Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
