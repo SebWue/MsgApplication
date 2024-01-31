@@ -1,11 +1,5 @@
 # Dokumentation MsgApplication
 
-## Anmerkungen Vorab
-
-Die Dokumente Server.cpp und Server.h sind noch nicht funktionstüchtig und können ignoriert werden, da sie vom Programm nicht aufgerufen werden.
-Sollte das Programm wärend der ausführung auf einmal nicht mehr funktionieren, könnte es sein, dass das Programm eine Library geschlossen hat, wodurch die eingabe nicht mehr funktioniert.
-
-
 ## Prinzip des Programmes
 Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird.
 
