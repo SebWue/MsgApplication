@@ -1,9 +1,10 @@
 # Dokumentation MsgApplication
 
-![Flowchart Program](flowchart.png "Text to show on mouseover")
+## Idee des Programmes
+Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um dies zu
 
-## Prinzip des Programmes
-Das Prinzip des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird.
+## Ablauf des Programmes
+![Flowchart Program](image/flowchart.png "Text to show on mouseover")
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
