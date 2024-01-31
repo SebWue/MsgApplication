@@ -78,9 +78,7 @@ Die Klasse ist selbst geschrieben und hat die meißte Zeit in Anspruch genommen.
 Ermöglicht die Operation modulo `%` sodass sie auch an Arrays/Vektoren funktioniert.
 
 ### endecrypt.cpp
-
 Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
-
 
 ### window.cpp
 Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).

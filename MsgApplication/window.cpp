@@ -53,15 +53,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
     ShowWindow(hwnd, nCmdShow);
 
-    // Run the message loop.
+    // Run the message loop. Like an event handler
     CreateFont(15, NULL, NULL, NULL, FW_DONTCARE, 0, 0, 0,0,0,0,0,0,0);
     MSG msg = {  };
+
     while (GetMessage(&msg, NULL, 0, 0) > 0)
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-
+    
     return 0;
 }
 
@@ -311,7 +312,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         case 0x0D:  //carrige return
 
-
             if (mode == RSA_MODE) {
                 ownencry.clear();
                 ownencryChar.clear();
@@ -484,8 +484,5 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void window::create()
 {
-    wWinMain(NULL, NULL, NULL, 1);
-}
-void window::deployRecivedMsg() {
-
+    wWinMain(0, 0, 0, 1);
 }
