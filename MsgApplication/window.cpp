@@ -176,13 +176,14 @@ vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo) {
     //--------------------------------------
     return fillTo;
 }
-
+int keys = 0;
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     HFONT hFont1;
     hFont1 = CreateFont(48, 0, 0, 0, FW_DONTCARE, FALSE, TRUE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Impact"));
     int xPos;
     int yPos;
+    generateKey getKeys;
     endecryp rsa;
     calcW wmath;
     HDC hdc;                   // handle to device context 
@@ -268,7 +269,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         xPos = GET_X_LPARAM(lParam);
         yPos = GET_Y_LPARAM(lParam);
         if (xPos > 0 && xPos < 200 && yPos > 50 && yPos < 100) {
-            mode = HELP;
+
+            getKeys.newThreadToCheck();
+            keys = 1;
             SetRect(&rc, 0, 0, 1200, 700);
             InvalidateRect(hwnd, &rc, TRUE);
             cout << "HIT";
@@ -413,6 +416,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         
         HDC hdc = BeginPaint(hwnd, &ps);
 
+
         //Background Color
         FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
         SetRect(&rc, 5, 0, 190, 50);
@@ -423,11 +427,16 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         FrameRect(hdc, &rc, rectcolor);
 
         SetRect(&rc, 0, 50, 190, 100);
-        rectcolor = CreateSolidBrush(RGB(0, 0, 0));
         FrameRect(hdc, &rc, rectcolor);
+        SetRect(&rc, 27, 67, 190, 100);
+        DrawTextW(hdc, L"Generate Keys", -1, &rc, DT_LEFT);
 
-        if (mode == RSA_MODE) {
-            HideCaret(hwnd);
+        if (keys != 0) {
+            SetRect(&rc, 200, 30, 190, 100);
+            DrawText(hdc, L"Keys: ", -1, &rc, DT_LEFT);
+            cout << "in here";
+        }
+        HideCaret(hwnd);
             if (620 + (nCaretPosY - 600) < 660) {
                 //Messagebox
                 RoundRect(hdc, 190, 595, dwLineLen + 5, 620 + (nCaretPosY - 600), 30, 30);
@@ -469,12 +478,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             SetCaretPos(nCaretPosX, nCaretPosY);
             ReleaseDC(hwnd, hdc);
             ShowCaret(hwnd);
-        }
-        else if(mode == HELP){
-            cout << "HELP";
-            SetRect(&rc, 400, 200, dwLineLen, dwClientY);
-            DrawTextW(hdc, L"", -1, &rc, DT_LEFT);
-        }
+        
         EndPaint(hwnd, &ps);
         break;
     }

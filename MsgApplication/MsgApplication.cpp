@@ -22,8 +22,5 @@ int main()
 	/*const auto processor_count = std::thread::hardware_concurrency();
 	cout << processor_count << endl;*/
 	
-	thread t3(&generateKey::newThreadToCheck, &keyget);
 	window.create();
-
-	t3.join();
 }
