@@ -1,7 +1,7 @@
 # Dokumentation MsgApplication
 
 ## Idee des Programmes
-Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um dies zu
+Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um diese Idee umzusetzen, verwende ich C++. W
 
 ## Ablauf des Programmes
 ![Flowchart Program](image/flowchart.png "Text to show on mouseover")

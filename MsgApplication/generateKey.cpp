@@ -59,11 +59,6 @@ void generateKey::generate(){
 				}
 			}
 		}
-		cout << endl;
-		for (int i = 0; i < partofm.size(); i++) {
-			cout << partofm[i] << " ";
-		}
-		cout << endl;
 		//checking if e is smaller than m and not part of the divisor list from m
 		BOOL running = true;
 		while (running) {

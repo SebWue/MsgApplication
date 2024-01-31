@@ -141,7 +141,6 @@ vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo) {
         HDC hdc = GetDC(hwnd);
         GetCharWidth32(hdc, (UINT)fillTo[fillTo.size() - 1], (UINT)fillTo[fillTo.size() - 1], &nCharWidth);
         encryNumDis += nCharWidth;
-        cout << " " << encryNumDis << " ";
 
         if (i == 0) {
             if (encryNumDis > 1000) {
@@ -377,7 +376,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                     in.push_back(ch);
 
                     nCurChar = cch;
-                    SetRect(&rc, 0, 0, 1200, 700);
+                    SetRect(&rc, 190, 600, 1200, 700);
                     InvalidateRect(hwnd, &rc, TRUE);
                 }
                 break;
