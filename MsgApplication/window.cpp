@@ -84,7 +84,7 @@ BOOL overflow = false;
 
 vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo) {
 
-    fillTo.push_back(L' ');
+    fillTo.push_back(L' '); 
     TCHAR c;
     int temp1 = fillIn, len = 0;
     int filler;
