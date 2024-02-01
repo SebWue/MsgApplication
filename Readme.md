@@ -110,7 +110,7 @@ Ruft die Funktion `wWinMain(0, 0, 0, 1);`  auf. Dadurch wird das Fenster erstell
 
 Funktionsname und Parameter sind von der Windows.h bibilotekt vorgegeben. Erstellt das Fenster mit den in der Funktion definierten Merkmalen. Enthält auch die Message Loop, welche zum abfangen der Inputs und System-Nachichten benutzt wird (z.B. `WM_SETFOCUS`, wenn das Fenster momentan im Vordergrund steht).
 Diese Message Loop ermöglicht es, sollte ein bestimmtes "event" passieren, wie das Fenster wird angeklickt, code ausgeführt werden kann. Dafür ruft
-~~~
+~~~cpp
     while (GetMessage(&msg, NULL, 0, 0) > 0)
     {
         TranslateMessage(&msg);
