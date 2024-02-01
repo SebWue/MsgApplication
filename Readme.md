@@ -46,17 +46,80 @@ Klasse, die ausschließlich am Anfang des Programms aufgerufen wird, um die Schlü
 `void generateKey::newThreadToCheck()`
 
 Diese Funktion wird vom neu erstellten Thread aus MsgApplication aufgerufen. Sie prüft, ob schon ein Schlüssel vorliegt. Sollte dies nicht der Fall sein, wird ein neues Schlüsselpaar erstellt (bisher wird der generierte Schlüssel noch nicht gespeichert).
-Sollte kein Schlüssel vorliegen (kann es noch gar nicht), wird die Funktion generate() aufgerufen.
-Anschließend werden die generierten Schlüssel in der Funktion der Klasse endecrypt() hineingegeben, welche diese dort Speichert und die Schlüssel nun benutzt werden können.
+Sollte kein Schlüssel vorliegen, wird die Funktion `generate()` aufgerufen.
+Anschließend werden die generierten Schlüssel in der Funktion der Klasse `endecrypt()` hineingegeben, welche diese dort Speichert und die Schlüssel nun benutzt werden können.
 
 `void generateKey::generate()`
 
-Wird von der Funktion `newThreadToCheck()` aufgerufen, sollte kein Schlüssel gefunden worden sein. Sie generiert ein Schlüsselpaar, welches im weitern Verlauf des Programmes zum Ver- und Entschlüsseln genutzt wird.
-Das Schlüsselpaar wird von zwei zufällig ausgewählten Primzahlen `UINT q, p` aus Liste `vector<UINT>primes`, diese wird jeden Programmstart neu errechnet, ausgewählt. Die beiden Primzahlen werden anschließend miteinenannder Multipliziert, sodass man die Variable `UINT n` erhält.
-Um nun die Variable `UINT m` zu erhalten subtrahiert man die einzelen werte `p, q` mit 1, sodass man die Operation `m = (p - 1) * (q - 1);` bekommt. 
+Sollte kein Schlüssel gefunden worden sein, wid die Funktion von `newThreadToCheck()` aufgerufen. Sie generiert ein Schlüsselpaar, welches im weitern Verlauf des Programmes zum Ver- und Entschlüsseln genutzt wird.
+
+~~~cpp
+//set p and q to randomly chosen primes from the list
+	q = primes[(rand() % (primes.size() - 1))];
+
+	p = primes[(rand() % (primes.size() - 1))];
+
+	//calculate n and m
+	n = p * q;
+
+	m = (p - 1) * (q - 1);
+~~~
+Das Schlüsselpaar wird von zwei zufällig ausgewählten Primzahlen `UINT q, p` aus der Liste `vector<UINT>primes` ausgewählt(diese wird jeden Programmstart neu errechnet). Die beiden Primzahlen werden anschließend miteinenannder multipliziert, sodass man die Variable `UINT n` erhält.
+
+Um nun die Variable `UINT m` zu erhalten subtrahiert man die einzelen werte `p, q` mit 1, sodass man die Operation `m = (p - 1) * (q - 1);` bekommt.
+
+~~~cpp
+BOOL running = true;
+	while (running) {
+		e = primes[(rand() % (194 + 1))];
+		for (int i = 0; i < partofm.size(); i++) {
+			if (e != partofm[i] && e < m) {
+				running = false;
+				break;
+			}
+		}
+	}
+~~~
 Jetzt hat man alle Werte welche man benötigt um die Variable `UINT e` zu brerechnen, welche in diesem Programm der öffentliche Schlüssel ist.
 Die Kriterien die man beachten muss bei der generierung von `e` ist, das `e` Teilerfremd zu und kleiner als `m` sein muss. Dazu erstellen wir erst ein Vektor, welcher alle Teiler von m speichert. Diesen füllen wir, indem das Programm eine Temporäre Variable `mcurr` welche gleich `m` gesetzt wird in einer for-Schleife durch den Wert von der Zähler-Variable `i` geteilt wird, sollte der Modulo von `m % i == 0` sein. Sollte dies der Fall sein, wird `mcurr` nun also durch `i` geteilt und `i` wird in dem Vektor `partofm` gespeichert. Wichtig ist es zu beachten, dass die Zählervariable `i` mit 2 startet, da sonst der Vektor mit dem Wert 1 geflutet wird, da dieser 1 bei einer Divison immer einen Rest von 0 hat.
 Um nun `e` tatsächlich bestimmen zu können, wählen wir Zufällig aus dem Vekor eine Primzahl aus, und gucken ob die Kriterien auf sie zutreffen.
+
+~~~cpp
+while (true) {
+	divis.push_back(tempe / tempm);
+		modulo = tempe % tempm;
+		if (modulo != 0) {
+			tempe = tempm;
+			tempm = modulo;
+			if (tempe < tempm) {
+				tempm = tempe;
+					tempe = modulo;
+			}
+		}
+		if (modulo == 0) {
+			break;
+		}
+		cdivis++;
+	}
+
+	//finaly get d
+	int tempi;
+	//repeat the formula b = a - (e/m * b) until the first entry in divis
+	for (int i = cdivis - 1; i >= 0; i--) {
+	tempi = i;
+		prevb = b;
+		b = a - divis[i] * b;
+		a = prevb;
+	}
+
+	//because d > 0, we have to add m to it
+	ind = a;
+
+	if (ind < 0) {
+		d = ind + m;
+	}
+	else { d = ind; }
+~~~
 
 Nun fehlt uns nur noch der Wert `UINT d`, welcher hier der private Schlüssel ist.
 Um `d` uaszurechnen, benötigen wir zu erst einmal die Variablen `UINT tempe = e, tempm = m`, welche den gleichen Wert haben wie die nicht Temporären Variablen `e` und `m`,  da wir mit den Werten von `e` und `m` weiter rechnen müssen, aber nicht die originalen Werte verändern wollen. Deshalb erstellen wir temporäre Varíablen der beiden Werte.

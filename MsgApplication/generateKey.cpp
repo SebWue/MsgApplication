@@ -30,9 +30,9 @@ void generateKey::generate(){
 	}
 	do {
 		//set p and q to randomly chosen primes from the list
-		q = primes[(rand() % (100 + 1))];
+		q = primes[(rand() % (primes.size() - 1))];
 
-		p = primes[(rand() % (100 + 1))];
+		p = primes[(rand() % (primes.size() - 1))];
 		//calculate n and m
 		n = p * q;
 
