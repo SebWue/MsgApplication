@@ -6,7 +6,6 @@
 #include <thread>
 using namespace std::chrono;
 using namespace std;
-#include "countS.h"
 #include "calcW.h"
 #include "endecryp.h"
 
@@ -28,8 +27,6 @@ void endecryp::getKeys(UINT &priv1, UINT &pub1, UINT &mod1)
 }
 UINT endecryp::encrypt(TCHAR c)
 {
-	//starting a counter
-	countS countS;
 	calcW calcW;
 
 	auto start = high_resolution_clock::now();

@@ -156,10 +156,32 @@ Funktion, welche von `generateKey::newThreadToCheck()` aufgerufen wird. Sie setz
 
 `UINT endecryp::encrypt(TCHAR c)` 
 
+~~~cpp
+calcW calcW;
+
+	auto start = high_resolution_clock::now();
+
+	UINT cint = (UINT)c;
+	vector<int> cintarr;
+	cintarr = calcW.turninttoarray(cint);	//character gets fed into a vector
+	cintarr = calcW.lpow(cintarr, pub);	//vector to the power of pub
+	cint = calcW.lmod(cintarr, mod);	//get the modulo of the resulting number in the array
+~~~
+
 Verschlüsselt ein Zeichen, mithilfe der Funktionen aus `calcW`. Die Verschlüsselung funktioniert, indem erst das Zeichen in einenen Integer umgewandet wird, und dann hoch den `pub` (public) key gerechnet wird. Anschließend wird noch der Modulo von dem errechneten Array genommen, und das Ergebniss ist die Verschlüsselte Zeichen.
 
 
 `TCHAR endecryp::decrypt(UINT cint)`
+
+~~~cpp
+calcW calcW;
+	TCHAR c;
+	vector<int>cintarr;
+	cintarr = calcW.turninttoarray(cint);	 //feed the encrypted character into a vectot
+	cintarr = calcW.lpow(cintarr, priv);	 //vector to the power of priv
+	cint = calcW.lmod(cintarr, mod);	 //get the modulo of the resulting number in the array
+	c = (TCHAR)cint;
+~~~
 
 Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt einem Zeichen wird eine Zahl hinein gegeben, das ergebniss aus `encrypt()`, und die Zahl wird hoch `priv` gerechnet, was der Private Schlüssel ist. Das Ergebniss der anschließeneden Modulorechnung ist dann der Klartext, welcher in `encrypt()` hineingegeben wurde.
 
