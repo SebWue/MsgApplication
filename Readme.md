@@ -32,6 +32,7 @@ Zwar ist der RSA-Algorythmus nicht zum Ver- und Entschlüsseln von z.B. Texten ge
 Main Klasse. Das Programm startet hier und ruft die anderen Klassen auf.   
 
 `thread t3(&generateKey::newThreadToCheck,&keyget);`
+
 Erstellt einen neuen Thread, welcher parallel zum Main Thread das Schlüsselpaar generiert.
 
 `window.create();`
@@ -43,11 +44,13 @@ Genauere Erklärung in [window.cpp](#window.cpp)
 Klasse, die ausschließlich am Anfang des Programms aufgerufen wird, um die Schlüssel zu erstellen.
 
 `void generateKey::newThreadToCheck()`
+
 Diese Funktion wird vom neu erstellten Thread aus MsgApplication aufgerufen. Sie prüft, ob schon ein Schlüssel vorliegt. Sollte dies nicht der Fall sein, wird ein neues Schlüsselpaar erstellt (bisher wird der generierte Schlüssel noch nicht gespeichert).
 Sollte kein Schlüssel vorliegen (kann es noch gar nicht), wird die Funktion generate() aufgerufen.
 Anschließend werden die generierten Schlüssel in der Funktion der Klasse endecrypt() hineingegeben, welche diese dort Speichert und die Schlüssel nun benutzt werden können.
 
 `void generateKey::generate()`
+
 Wird von der Funktion `newThreadToCheck()` aufgerufen, sollte kein Schlüssel gefunden worden sein. Sie generiert ein Schlüsselpaar, welches im weitern Verlauf des Programmes zum Ver- und Entschlüsseln genutzt wird.
 Das Schlüsselpaar wird von zwei zufällig ausgewählten Primzahlen `UINT q, p` aus Liste `vector<UINT>primes`, diese wird jeden Programmstart neu errechnet, ausgewählt. Die beiden Primzahlen werden anschließend miteinenannder Multipliziert, sodass man die Variable `UINT n` erhält.
 Um nun die Variable `UINT m` zu erhalten subtrahiert man die einzelen werte `p, q` mit 1, sodass man die Operation `m = (p - 1) * (q - 1);` bekommt. 
@@ -66,25 +69,31 @@ Der allerletzte schritt ist nun, `n`, `e` und `d` in den Global definierten Vari
 Selbst erstellte Klasse zum Rechnen großen Zahlen mit Hilfe von Vektoren.
 
 `vector<int> calcW::turninttoarray(int a)`
+
 Schreibt einen Integer in einen Vektor, indem die Zahl modulo 10 (a % 10) gerechnet wird um die letzte (kleinste noch vorhandene Zahl) in den Vektor zu schreiben
 
 `vector<int> calcW::lpow(vector<int> orignum, int power)`
+
 Erweiterung des `pow()` Befehls. Es muss eine Zahl, welche in einem Vektor gespeichert wird, und die Zahl, mit welcher die Zahl hoch genommen wird, hereingegeben werden. Dies ermöglicht die Rechnung von z.B. 50234<sup>324232</sup>, wo das Ergebniss in einer üblichen Variablen Arten nicht gespeichert werden kann.
 Die Klasse ist selbst geschrieben und hat die meißte Zeit in Anspruch genommen.
 
 `int calcW::lmod(vector<int> orgnum, int divident)`
+
 Ermöglicht die Operation modulo `%` sodass sie auch an Arrays/Vektoren funktioniert.
 
 ### endecrypt.cpp
 Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
 
 `void endecryp::setKeys(UINT priv1, UINT pub1, UINT mod1)`
+
 Funktion, welche von `generateKey::newThreadToCheck()` aufgerufen wird. Sie setzt die Global definierten Variablen `UINT priv, pub, mod` auf die Werte, welche in die Funktion eingegeben werden. Sie werden zum Ent- und Verschlüsseln benötigt.
 
 `UINT endecryp::encrypt(TCHAR c)` 
+
 Verschlüsselt ein Zeichen, mithilfe der Funktionen aus `calcW`. Die Verschlüsselung funktioniert, indem erst das Zeichen in einenen Integer umgewandet wird, und dann hoch den `pub` (public) key gerechnet wird. Anschließend wird noch der Modulo von dem errechneten Array genommen, und das Ergebniss ist die Verschlüsselte Zeichen.
 
 `TCHAR endecryp::decrypt(UINT cint)`
+
 Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt einem Zeichen wird eine Zahl hinein gegeben, das ergebniss aus `encrypt()`, und die Zahl wird hoch `priv` gerechnet, was der Private Schlüssel ist. Das Ergebniss der anschließeneden Modulorechnung ist dann der Klartext, welcher in `encrypt()` hineingegeben wurde.
 
 ### window.cpp
