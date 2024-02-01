@@ -38,7 +38,7 @@ Erstellt einen neuen Thread, welcher parallel zum Main Thread das Schlüsselpaar 
 `window.create();`
 
 Ruft die Funktion von window.cpp “void create()” auf. Diese sorgt für die Erstellung des Fensters.
-Genauere Erklärung in [window.cpp](#window.cpp)
+Genauere Erklärung in [window.cpp](#windowcpp)
 
 ### generateKey.cpp
 Klasse, die ausschließlich am Anfang des Programms aufgerufen wird, um die Schlüssel zu erstellen.
