@@ -10,11 +10,11 @@ Zwar ist der RSA-Algorythmus nicht zum Ver- und Entschlüsseln von z.B. Texten ge
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
 
-- MsgApplication.cpp
-- generateKey.cpp
-- calcW.cpp
-- endecrypt.cpp
-- window.cpp
+- [MsgApplication.cpp](#MsgApplicationcpp)
+- [generateKey.cpp](#generateKeycpp)
+- [calcW.cpp](#calcWcpp)
+- [endecrypt.cpp](#endecryptcpp)
+- [window.cpp](#windowcpp)
 
 ## Importierte Funktionen/Libaries und DatenTypen
 
@@ -138,6 +138,7 @@ Schreibt einen Integer in einen Vektor, indem die Zahl modulo 10 (a % 10) gerech
 `vector<int> calcW::lpow(vector<int> orignum, int power)`
 
 Erweiterung des `pow()` Befehls. Es muss eine Zahl, welche in einem Vektor gespeichert wird, und die Zahl, mit welcher die Zahl hoch genommen wird, hereingegeben werden. Dies ermöglicht die Rechnung von z.B. 50234<sup>324232</sup>, wo das Ergebniss in einer üblichen Variablen Arten nicht gespeichert werden kann.
+
 Die Klasse ist selbst geschrieben und hat die meißte Zeit in Anspruch genommen.
 
 `int calcW::lmod(vector<int> orgnum, int divident)`
