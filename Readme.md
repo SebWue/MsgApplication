@@ -8,6 +8,8 @@ Zwar ist der RSA-Algorythmus nicht zum ver- und entschlüsseln von z.B. Texten ge
 einem Gerät zu einem anderen und wird deshalb oft zum Austausch von Schlüsseln von Symmetrischen Verschlüsselungsverfahren genutzt, da diese deutlich 
 schneller und effizienter Arbeiten.
 
+
+
 ## Ablauf des Programmes
 ![Flowchart Program](image/flowchart.png "Flowchart")
 
@@ -26,7 +28,7 @@ schneller und effizienter Arbeiten.
 - thread -> benutzt für die Gleichzeitige Erstellung von dem Fenster und dem Schüssel
 - iostream -> "Standart" Bibilotek, vereinfacht die Ausgabe von Text, Variablen, usw...; Viele andere Bibiloteken bauen auf ihr auf
 - vector -> auch Liste genannt, dynamisches Array, was die Handhabung von Arrays einfacher macht (keine statische Größe, mehr möglichkeiten mit den Daten zu 
-- interagieren(.push_back(); .size(); .clear(); ...), ...)
+interagieren(.push_back(); .size(); .clear(); ...)
 - chrono -> benutzt um die Ausführungszeit eines Programmabschnittes zu bekommen
 - math.h -> nur für pow(x,y) benutzt
 - WindowsX.h -> Benutzt um die X und Y Koordinaten aus der System-Nachicht zu bekommen, welche bei einem Mausklick abgeschickt wird (GET_X_LPARAM(lparam), 

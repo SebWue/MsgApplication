@@ -317,7 +317,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         
         switch (wParam)
         {
-        case 0x08:  //backspace 
+        case 0x08:  //backspace
 
             if (in.size() >= 1) {
                 hdc = GetDC(hwnd);
