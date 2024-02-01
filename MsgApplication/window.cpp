@@ -499,7 +499,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 MessageBox(hwnd, L"OVERFLOW, TOO MANY CHARACTERS", L"WARNING: OVERFLOW", NULL);
                 overflow = true;
                 break; 
-            } 
+            }
             if (decry.size() != NULL) {
                 SetRect(&rc, 205, 180, dwLineLen, dwClientY);
                 DrawTextW(hdc, L"Enrypted Text: ", -1, &rc, DT_LEFT);
@@ -507,6 +507,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 ownencryChar.push_back(L'\0');
                 DrawTextW(hdc, ownencryChar.data(), -1, &rc, DT_LEFT);
                 ownencryChar.pop_back();
+                SetRect(&rc, 200, 280, dwLineLen, dwClientY);
+                DrawTextW(hdc, L"Recovered Text: ", -1, &rc, DT_LEFT);
                 SetRect(&rc, 200, 300, dwLineLen, dwClientY);
                 decry.push_back(L'\0');
                 DrawTextW(hdc, decry.data(), -1, &rc, DT_LEFT);

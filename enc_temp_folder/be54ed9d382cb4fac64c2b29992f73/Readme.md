@@ -1,8 +1,7 @@
 # Dokumentation MsgApplication
 
 ## Idee des Programmes
-Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um diese Idee umzusetzen, 
-verwende ich C++. Sollte der Nutzer Enter drücken, wird der eigegebene Text mit den generierten Schlüsseln ver- und dann sofort wieder entschlüsselt. Das Programm soll die Wirkungs und Arbeitsweise des RSA-Algorythmuses mithilfe eines Graphischen Interface demonstrieren.
+Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um diese Idee umzusetzen, verwende ich C++. Sollte der Nutzer Enter drücken, wird der eigegebene Text mit den generierten Schlüsseln ver- und dann sofort wieder entschlüsselt. Das Programm soll die Wirkungs und Arbeitsweise des RSA-Algorythmuses mithilfe eines Graphischen Interface demonstrieren.
 Zwar ist der RSA-Algorythmus nicht zum ver- und entschlüsseln von z.B. Texten gemacht, sonder dient der sicheren Übertragung von Daten von einem Gerät zu einem anderen und wird deshalb oft zum Austausch von Schlüsseln von Symmetrischen Verschlüsselungsverfahren genutzt, da diese deutlich schneller und effizienter Arbeiten.
 
 ## Ablauf des Programmes
