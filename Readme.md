@@ -183,7 +183,7 @@ calcW calcW;
 	c = (TCHAR)cint;
 ~~~
 
-Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt einem Zeichen wird eine Zahl hinein gegeben, das ergebniss aus `encrypt()`, und die Zahl wird hoch `priv` gerechnet, was der Private Schlüssel ist. Das Ergebniss der anschließeneden Modulorechnung ist dann der Klartext, welcher in `encrypt()` hineingegeben wurde.
+Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt einem Zeichen wird eine Zahl hinein gegeben, das ergebniss aus `encrypt()` wird hoch `priv` gerechnet, was der Private Schlüssel ist. Das Ergebniss der anschließeneden Modulorechnung ist dann der Klartext, welcher in `encrypt()` hineingegeben wurde.
 
 ### window.cpp
 Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
