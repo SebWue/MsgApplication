@@ -119,6 +119,21 @@ Diese Message Loop ermöglicht es, sollte ein bestimmtes "event" passieren, wie d
 ~~~
 Dispatch Message die Funktion `LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)` auf, welche ein langes switch-Statement enthält, wodurch die Sytem-Nachicht herausgefiltert wird und der Nachicht entsprechend Code ausgeführt werden kann.
 Bsp:
-```cpp
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-```
+~~~cpp
+case WM_LBUTTONDOWN:
+
+        xPos = GET_X_LPARAM(lParam);
+        yPos = GET_Y_LPARAM(lParam);
+        if (xPos > 0 && xPos < 200 && yPos > 50 && yPos < 100) {
+
+            getKeys.newThreadToCheck();
+            keys = 1;
+            SetRect(&rc, 0, 0, 1200, 700);
+            InvalidateRect(hwnd, &rc, TRUE);
+            cout << "HIT";
+        }
+        break;
+~~~
+Dieser Code wird ausgeführt, wenn die System-Nachicht die flag `WM_LBUTTONDOWM` enthält. Diese Nachicht wird von Windoes gesendet, wenn die Linke Maustaste gedrückt wird.
+Bei diesen Nachichten werden aber auch mehr als nur die Flags der Nachichz übergeben. Jede Nachicht hat zwei weitere Parameter, welche übergeben werden: `wParam` und `lParam`.
+In diiesem Beispiel enthält lParam die x- und y-Koordinaten des Mauszeigers zum Zeitpunktes des Klicks. So kann man einen Mausklick in seinem Programm verarbeiten und eine bestimmte Aktion ausführen, sollte der Nutzer in einem bestimmten Bereich klicken.
