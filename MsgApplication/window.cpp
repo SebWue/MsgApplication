@@ -431,12 +431,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetRect(&rc, 27, 67, 190, 100);
         DrawTextW(hdc, L"Generate Keys", -1, &rc, DT_LEFT);
 
-        if (keys != 0) {
-            SetRect(&rc, 200, 30, 190, 100);
-            DrawText(hdc, L"Keys: ", -1, &rc, DT_LEFT);
-            cout << "in here";
-        }
         HideCaret(hwnd);
+
+            SetRect(&rc, 200, 30, 190, 100);
+            DrawTextW(hdc, L"Keys: ", -1, &rc, DT_LEFT);
+            cout << "in here";
+
             if (620 + (nCaretPosY - 600) < 660) {
                 //Messagebox
                 RoundRect(hdc, 190, 595, dwLineLen + 5, 620 + (nCaretPosY - 600), 30, 30);

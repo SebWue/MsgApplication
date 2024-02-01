@@ -84,13 +84,16 @@ Ermöglicht die Operation modulo `%` sodass sie auch an Arrays/Vektoren funktioni
 ### endecrypt.cpp
 Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
 
+
 `void endecryp::setKeys(UINT priv1, UINT pub1, UINT mod1)`
 
 Funktion, welche von `generateKey::newThreadToCheck()` aufgerufen wird. Sie setzt die Global definierten Variablen `UINT priv, pub, mod` auf die Werte, welche in die Funktion eingegeben werden. Sie werden zum Ent- und Verschlüsseln benötigt.
 
+
 `UINT endecryp::encrypt(TCHAR c)` 
 
 Verschlüsselt ein Zeichen, mithilfe der Funktionen aus `calcW`. Die Verschlüsselung funktioniert, indem erst das Zeichen in einenen Integer umgewandet wird, und dann hoch den `pub` (public) key gerechnet wird. Anschließend wird noch der Modulo von dem errechneten Array genommen, und das Ergebniss ist die Verschlüsselte Zeichen.
+
 
 `TCHAR endecryp::decrypt(UINT cint)`
 
@@ -98,3 +101,24 @@ Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt ein
 
 ### window.cpp
 Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
+
+`void window::create()`
+
+Ruft die Funktion `wWinMain(0, 0, 0, 1);`  auf. Dadurch wird das Fenster erstellt
+
+`int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)`
+
+Funktionsname und Parameter sind von der Windows.h bibilotekt vorgegeben. Erstellt das Fenster mit den in der Funktion definierten Merkmalen. Enthält auch die Message Loop, welche zum abfangen der Inputs und System-Nachichten benutzt wird (z.B. `WM_SETFOCUS`, wenn das Fenster momentan im Vordergrund steht).
+Diese Message Loop ermöglicht es, sollte ein bestimmtes "event" passieren, wie das Fenster wird angeklickt, code ausgeführt werden kann. Dafür ruft
+~~~
+    while (GetMessage(&msg, NULL, 0, 0) > 0)
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+~~~
+Dispatch Message die Funktion `LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)` auf, welche ein langes switch-Statement enthält, wodurch die Sytem-Nachicht herausgefiltert wird und der Nachicht entsprechend Code ausgeführt werden kann.
+Bsp:
+```cpp
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+```
