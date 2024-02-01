@@ -20,6 +20,12 @@ void endecryp::setKeys(UINT priv1, UINT pub1, UINT mod1)
 	mod = mod1;
 }
 
+void endecryp::getKeys(UINT &priv1, UINT &pub1, UINT &mod1)
+{
+	priv1 = priv;
+	pub1 = pub;
+	mod1 = mod;
+}
 UINT endecryp::encrypt(TCHAR c)
 {
 	//starting a counter

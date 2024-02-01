@@ -80,11 +80,49 @@ vector<TCHAR> in;
 vector<UINT> ownencry;
 vector<TCHAR> ownencryChar;
 vector<TCHAR> decry;
+vector<TCHAR> keysout;
 BOOL overflow = false;
+UINT priva, publ, modu;
 
-vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo) {
+vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo, int key) {
 
     fillTo.push_back(L' '); 
+    switch (key) {
+    case 1:
+        fillTo.push_back(L'P');
+        fillTo.push_back(L'r');
+        fillTo.push_back(L'i');
+        fillTo.push_back(L'v');
+        fillTo.push_back(L'a');
+        fillTo.push_back(L't');
+        fillTo.push_back(L'e');
+        fillTo.push_back(L':');
+        fillTo.push_back(L' ');
+        break;
+    case 2:
+        fillTo.push_back(L'P');
+        fillTo.push_back(L'u');
+        fillTo.push_back(L'b');
+        fillTo.push_back(L'l');
+        fillTo.push_back(L'i');
+        fillTo.push_back(L'c');
+        fillTo.push_back(L': ');
+        fillTo.push_back(L' ');
+        break;
+    case 3:
+        fillTo.push_back(L'M');
+        fillTo.push_back(L'o');
+        fillTo.push_back(L'd');
+        fillTo.push_back(L'u');
+        fillTo.push_back(L'l');
+        fillTo.push_back(L'o');
+        fillTo.push_back(L':');
+        fillTo.push_back(L' ');
+        break;
+
+    default:
+        break;
+    }
     TCHAR c;
     int temp1 = fillIn, len = 0;
     int filler;
@@ -137,23 +175,14 @@ vector<TCHAR> returnOutputEncry(int fillIn, vector<TCHAR> fillTo) {
             fillTo.push_back((TCHAR)57);
             break;
         }
-
-        HDC hdc = GetDC(hwnd);
-        GetCharWidth32(hdc, (UINT)fillTo[fillTo.size() - 1], (UINT)fillTo[fillTo.size() - 1], &nCharWidth);
-        encryNumDis += nCharWidth;
-
-        if (i == 0) {
-            if (encryNumDis > 1000) {
-                fillTo.push_back(0x0D);
-                encryNumDis = 230;
-            }
-        }
-
         //if the limit gets exeeded while in progess of writing a number into the vector
-        else {
+        if (key == NULL) {
+
+            HDC hdc = GetDC(hwnd);
+            GetCharWidth32(hdc, (UINT)fillTo[fillTo.size() - 1], (UINT)fillTo[fillTo.size() - 1], &nCharWidth);
+            encryNumDis += nCharWidth;
             vector<TCHAR> temp;             //the characters that get replaced get put here
             if (encryNumDis > 1000) {
-                cout << endl << " here ";
                 for (int j = 0; j <= i; j++) {
                     temp.push_back(fillTo[fillTo.size() - 1 - i + j]);
                 }
@@ -229,6 +258,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         dwCharY = tm.tmHeight;
         mode = HELP;
         EnumChildWindows(hwnd, (WNDENUMPROC)SetFont, (LPARAM)GetStockObject(DEFAULT_GUI_FONT));
+        rsa.getKeys(priva, publ, modu);
+        keysout = returnOutputEncry(priva, keysout, 1);
+        keysout = returnOutputEncry(publ, keysout, 2);
+        keysout = returnOutputEncry(modu, keysout, 3);
         return 0;
 
     case WM_SIZE:
@@ -269,9 +302,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         xPos = GET_X_LPARAM(lParam);
         yPos = GET_Y_LPARAM(lParam);
         if (xPos > 0 && xPos < 200 && yPos > 50 && yPos < 100) {
-
             getKeys.newThreadToCheck();
-            keys = 1;
+            rsa.getKeys(priva, publ, modu);
+            keysout.clear();
+            keysout = returnOutputEncry(priva, keysout, 1);
+            keysout = returnOutputEncry(publ, keysout, 2);
+            keysout = returnOutputEncry(modu, keysout, 3);
             SetRect(&rc, 0, 0, 1200, 700);
             InvalidateRect(hwnd, &rc, TRUE);
             cout << "HIT";
@@ -330,7 +366,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                     UINT tempf = f;
                     int len = 0;
                     //writing the result in a vector to output the encrypted characters
-                    ownencryChar = returnOutputEncry(f, ownencryChar);
+                    ownencryChar = returnOutputEncry(f, ownencryChar, NULL);
                     cout << ownencry[n] << " ";
                 }
                 encryNumDis = 0;
@@ -433,9 +469,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         HideCaret(hwnd);
 
-            SetRect(&rc, 200, 30, 190, 100);
-            DrawTextW(hdc, L"Keys: ", -1, &rc, DT_LEFT);
-            cout << "in here";
+        SetRect(&rc, 200, 10, 300, 100);
+        DrawTextW(hdc, L"Keys: ", -1, &rc, DT_LEFT);
+
+        SetRect(&rc, 200, 30, 500, 100);
+        keysout.push_back('\0');
+        DrawTextW(hdc, keysout.data(), -1, &rc, DT_LEFT);
+        keysout.pop_back();
 
             if (620 + (nCaretPosY - 600) < 660) {
                 //Messagebox
