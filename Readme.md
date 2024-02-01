@@ -78,5 +78,14 @@ Ermöglicht die Operation modulo `%` sodass sie auch an Arrays/Vektoren funktioni
 ### endecrypt.cpp
 Die Klasse, welche aufgerufen wird um Text Ver - oder Entschlüsseln.
 
+`void endecryp::setKeys(UINT priv1, UINT pub1, UINT mod1)`
+Funktion, welche von `generateKey::newThreadToCheck()` aufgerufen wird. Sie setzt die Global definierten Variablen `UINT priv, pub, mod` auf die Werte, welche in die Funktion eingegeben werden. Sie werden zum Ent- und Verschlüsseln benötigt.
+
+`UINT endecryp::encrypt(TCHAR c)` 
+Verschlüsselt ein Zeichen, mithilfe der Funktionen aus `calcW`. Die Verschlüsselung funktioniert, indem erst das Zeichen in einenen Integer umgewandet wird, und dann hoch den `pub` (public) key gerechnet wird. Anschließend wird noch der Modulo von dem errechneten Array genommen, und das Ergebniss ist die Verschlüsselte Zeichen.
+
+`TCHAR endecryp::decrypt(UINT cint)`
+Diese Funktion ist praktisch die gleiche wie die encrypt Funktion, nur statt einem Zeichen wird eine Zahl hinein gegeben, das ergebniss aus `encrypt()`, und die Zahl wird hoch `priv` gerechnet, was der Private Schlüssel ist. Das Ergebniss der anschließeneden Modulorechnung ist dann der Klartext, welcher in `encrypt()` hineingegeben wurde.
+
 ### window.cpp
 Ist für die Erstellung des Fensters zuständig und enthält ebenfalls die Message Loop (Event Schleife).
