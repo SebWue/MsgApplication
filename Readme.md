@@ -3,33 +3,32 @@
 ## Idee des Programmes
 Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um diese Idee umzusetzen, 
 verwende ich C++. Sollte der Nutzer Enter drücken, wird der eigegebene Text mit den generierten Schlüsseln ver- und dann sofort wieder entschlüsselt. 
-Das Programm soll die Wirkungs und Arbeitsweise des RSA-Algorythmuses mithilfe eines Graphischen Interfaces demonstrieren.
+Das Programm soll die Wirkungs und Arbeitsweise des RSA-Algorythmuses mithilfe eines graphischen Interfaces demonstrieren.
 Zwar ist der RSA-Algorythmus nicht zum ver- und entschlüsseln von z.B. Texten gemacht, sonder dient der sicheren Übertragung von Daten von 
 einem Gerät zu einem anderen und wird deshalb oft zum Austausch von Schlüsseln von Symmetrischen Verschlüsselungsverfahren genutzt, da diese deutlich 
 schneller und effizienter Arbeiten.
 
 Um die RSA-Verschlüsselung nun umzusetzten, ertellt das Programm ein Fenster erstellen, wo der Text eingegeben wird. Sollte der 
 Text nun Verschlüsselt werden, wird dort auch der verschlüsselte und auch der wieder entschlüsselte Text ausgegeben. Für die 
-Erstellung des Fensters, benutze ich die `windows.h` Bibilothek. Da ich aber am anfang sehr wening gearbeitet habe, war die 
+Erstellung des Fensters, benutze ich die `windows.h` Bibilothek. Da ich aber am Anfang sehr wening erfahrung it der Bibilotek hatte, war die 
 Erstellung des Fensters recht Zeitintensiv. 
-Ebenfalls benötige ich die Message Loop, um die inputs zu verwalten. Diese beansprucht den größten Teil dieses Programmes, da es aus einem großen Switch-statement 
+Ebenfalls benötige ich die Message Loop, um die inputs zu verwalten. Diese beansprucht den größten Teil dieses Programmes, da sie aus einem großen switch-Statement 
 besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der Flag und den anderen Werten(Flag: uMsg, 
 Weitere parameter: wParam, lParam) Code ausführt, ohne welchen das Fenster sich nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen 
 als in z.B. Java, wo man einfach einen Event-Listener immportieren kann, welcher all dies vereinfacht. Dies ist vorallem 
-herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen können, wie ich dies am anfang des Projektes konnte.
+herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen können, wie es bei mir der fall war.
 
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
 gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die
 gesammten Winterferien damit beschäftigt diese Klasse zu schreiben, da in C++ keine Bibilotek existiert, welche die Berechnung
-von großen Zahlen in vereinfacht). Da ich noch praktisch keine Erfahurng mit dieser Bibilothek hatte, ist die Art und Weise, wie ich 
-einige Parameter gesetzt habe ebenfalls nicht Optimal und hat noch ein hohes Verbesserungspotential.
+von großen Zahlen in vereinfacht).
 
 Die größte Herausforderung bei diesem Projekt war die Programmierung der Klasse calcW (wie oben schon erwähnt), da ich für die ver-
-und entschlüsselung Zahlen hoch, z.B. 21607 rechnen muss. Sollte ich also 603<sup>21607</sup> rechnen wollen, muss ich dies in
+und entschlüsselung Zahlen hoch z.B. 21607 rechnen muss. Sollte ich also 603<sup>21607</sup> rechnen wollen, muss ich dies in
 einem Array tuen, da keine Variable das Resultat dieser Rechnung speichern kann. Also musste ich mir eine Methode ausdenken, mit
 welcher eine Zahl in einem Array hoch eine andere Zahl gerechnet werden kann und anschließend die resultiernde Zahl, ebenfalls in
-einem Array, durch eine Zahl dividiert und der Rest gespeichert werden kann, da das Ergebniss der Modulo operation das 
-verschlüsselte Zeichen ergibt.
+einem Array, durch eine Zahl dividiert und der Rest gespeichert werden kann. Das Ergebniss dieser Modulorechnung ergibt dann 
+das verschlüsselte Zeichen.
 
 ## Ablauf des Programmes
 ![Flowchart Program](image/flowchart.png "Flowchart")
