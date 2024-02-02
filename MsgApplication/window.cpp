@@ -472,7 +472,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetRect(&rc, 200, 10, 300, 100);
         DrawTextW(hdc, L"Keys: ", -1, &rc, DT_LEFT);
 
-        SetRect(&rc, 200, 30, 500, 100);
+        SetRect(&rc, 200, 30, 1200, 100);
         keysout.push_back('\0');
         DrawTextW(hdc, keysout.data(), -1, &rc, DT_LEFT);
         keysout.pop_back();
