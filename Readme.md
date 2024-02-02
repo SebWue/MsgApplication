@@ -16,7 +16,7 @@ Ebenfalls benötige ich die Message Loop, um die inputs zu verwalten. Diese beans
 besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der Flag und den anderen Werten(Flag: uMsg, 
 Weitere parameter: wParam, lParam) Code ausführt, ohne welchen das Fenster sich nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen 
 als in z.B. Java, wo man einfach einen Event-Listener immportieren kann, welcher all dies vereinfacht. Dies ist vorallem 
-herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen können, wie es bei mir der fall war.
+herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen kann, wie es bei mir der fall war.
 
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
 gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die
