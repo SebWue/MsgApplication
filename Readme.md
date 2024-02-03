@@ -1,16 +1,20 @@
 # Dokumentation MsgApplication
 
 ## Idee des Programmes
-Die Idee des Programmes ist, das der Benutzter einen Text eingeben kann, welcher mit der RSA-Verschlüsselung verschlüsselt wird. Um diese Idee umzusetzen, 
-verwende ich C++. Sollte der Nutzer Enter drücken, wird der eigegebene Text mit den generierten Schlüsseln ver- und dann sofort wieder entschlüsselt. 
-Das Programm soll die Wirkungs und Arbeitsweise des RSA-Algorythmuses mithilfe eines graphischen Interfaces demonstrieren.
-Zwar ist der RSA-Algorythmus nicht zum ver- und entschlüsseln von z.B. Texten gemacht, sonder dient der sicheren Übertragung von Daten von 
-einem Gerät zu einem anderen und wird deshalb oft zum Austausch von Schlüsseln von Symmetrischen Verschlüsselungsverfahren genutzt, da diese deutlich 
-schneller und effizienter Arbeiten.
+Die Idee des Programmes ist, das der Benutzter einen Text in einem interaktiven Fenster eingeben kann, welcher, sollte der Nutzer Enter drücken, mit 
+RSA verschlüsselt wird. RSA steht für Rivest-Shamir-Adleman, die Erfinder dieser asymetrischen Verschlüsselungstechnik. Um diese Idee umzusetzen, verwende ich 
+C++. Dies war im nachhinein nicht die beste Wahl, da das Erstellen und Ändern eines Fensters mit C++ schwieriger und zeitintensiver ist als in z.B. Java. 
+Weiterhin muss man bei der RSA-Verschlüsselung eine große Zahl mit einer anderen großen Zahl potentieren, was zu riesigen Zahlen führt. Um diese Zahlen zu 
+speichern, reichen die Bitlängen der Standard Variablen nicht aus. Da C++ auch keine Bibilotek hat, welche die Speicherung und Verarbeitung dieser Ergebnisse 
+vereinfacht, musste ich mir ein Verfahren ausdenken, mit welchem sich diese Werte speichern und verarbeiten lassen, und dieses Verfahren in der Klasse 
+[calcW.cpp](#calcWcpp) umgesetzt. 
 
-Um die RSA-Verschlüsselung nun umzusetzten, ertellt das Programm ein Fenster erstellen, wo der Text eingegeben wird. Sollte der 
+Der RSA-Algorythmus wird nicht zum Ver- und Entschlüsseln von z.B. langen Texten benutzt, sondern dient der Übertragung von Schlüsseln wie z.B. 
+symmetrischen Schlüsseln und der Autentifizierung von z.B. Webseiten zwischen zwei Geräten.
+
+Um die RSA-Verschlüsselung nun umzusetzten, ertellt das Programm ein Fenster, wo der Text eingegeben wird. Sollte der 
 Text nun Verschlüsselt werden, wird dort auch der verschlüsselte und auch der wieder entschlüsselte Text ausgegeben. Für die 
-Erstellung des Fensters, benutze ich die `windows.h` Bibilothek. Da ich aber am Anfang sehr wening erfahrung it der Bibilotek hatte, war die 
+Erstellung des Fensters, benutze ich die `windows.h` Bibilothek. Da ich aber am Anfang sehr wening erfahrung mit der Bibilotek hatte, war die 
 Erstellung des Fensters recht Zeitintensiv. 
 Ebenfalls benötige ich die Message Loop, um die inputs zu verwalten. Diese beansprucht den größten Teil dieses Programmes, da sie aus einem großen switch-Statement 
 besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der Flag und den anderen Werten(Flag: uMsg, 
@@ -23,12 +27,6 @@ gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvol
 gesammten Winterferien damit beschäftigt diese Klasse zu schreiben, da in C++ keine Bibilotek existiert, welche die Berechnung
 von großen Zahlen in vereinfacht).
 
-Die größte Herausforderung bei diesem Projekt war die Programmierung der Klasse calcW (wie oben schon erwähnt), da ich für die ver-
-und entschlüsselung Zahlen hoch z.B. 21607 rechnen muss. Sollte ich also 603<sup>21607</sup> rechnen wollen, muss ich dies in
-einem Array tuen, da keine Variable das Resultat dieser Rechnung speichern kann. Also musste ich mir eine Methode ausdenken, mit
-welcher eine Zahl in einem Array hoch eine andere Zahl gerechnet werden kann und anschließend die resultiernde Zahl, ebenfalls in
-einem Array, durch eine Zahl dividiert und der Rest gespeichert werden kann. Das Ergebniss dieser Modulorechnung ergibt dann 
-das verschlüsselte Zeichen.
 
 ## Ablauf des Programmes
 ![Flowchart Program](image/flowchart.png "Flowchart")
