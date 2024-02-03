@@ -12,24 +12,24 @@ vereinfacht, musste ich mir ein Verfahren ausdenken, mit welchem sich diese Wert
 Der RSA-Algorythmus wird nicht zum Ver- und Entschlüsseln von z.B. langen Texten benutzt, sondern dient der Übertragung von Schlüsseln wie z.B. 
 symmetrischen Schlüsseln und der Autentifizierung von z.B. Webseiten zwischen zwei Geräten.
 
-Um die RSA-Verschlüsselung nun umzusetzten, ertellt das Programm ein Fenster, wo der Text eingegeben wird. Sollte der 
-Text nun Verschlüsselt werden, wird dort auch der verschlüsselte und auch der wieder entschlüsselte Text ausgegeben. Für die 
-Erstellung des Fensters, benutze ich die `windows.h` Bibilothek. Da ich aber am Anfang sehr wening erfahrung mit der Bibilotek hatte, war die 
-Erstellung des Fensters recht Zeitintensiv. 
-Ebenfalls benötige ich die Message Loop, um die inputs zu verwalten. Diese beansprucht den größten Teil dieses Programmes, da sie aus einem großen switch-Statement 
-besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der Flag und den anderen Werten(Flag: uMsg, 
-Weitere parameter: wParam, lParam) Code ausführt, ohne welchen das Fenster sich nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen 
-als in z.B. Java, wo man einfach einen Event-Listener immportieren kann, welcher all dies vereinfacht. Dies ist vorallem 
-herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen kann, wie es bei mir der fall war.
+## Aufbau des Programmes MsgApplication
+Zur Veranschaulichung des Programmaufbaues ist nachfolgend ein Flussdiagramm dargestellt.
+![Flowchart Program](image/flowchart.png "Flowchart")
+Das Programm erstellt zu Beginn ein Fenster, in dem Text eingegeben werden kann. Für die Erstellung des Fensters, benutze ich die `windows.h` Bibilothek.
+Danach geht das Programm in die *Message-Loop*, um auf Systemnachichten zu reagieren. Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
+erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht, dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
+z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesended, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). Die *Message-Loop* beansprucht den größten Teil 
+des Codes, da sie aus einem 
+switch-Statement besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der ID und den anderen Parametern Code ausführt, ohne welchen das Fenster sich 
+nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen als in z.B. Java, wo man einfach einen Event-Listener immportieren kann, welcher all dies 
+vereinfacht. Dies ist vorallem herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen können, wie es bei mir der Fall war.
+
+
 
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
 gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die
 gesammten Winterferien damit beschäftigt diese Klasse zu schreiben, da in C++ keine Bibilotek existiert, welche die Berechnung
 von großen Zahlen in vereinfacht).
-
-
-## Ablauf des Programmes
-![Flowchart Program](image/flowchart.png "Flowchart")
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
@@ -245,8 +245,8 @@ Ruft die Funktion `wWinMain(0, 0, 0, 1);`  auf. Dadurch wird das Fenster erstell
 
 `int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)`
 
-Funktionsname und Parameter sind von der Windows.h bibilotekt vorgegeben. Erstellt das Fenster mit den in der Funktion definierten Merkmalen. Enthält auch die 
-Message Loop, welche zum abfangen der Inputs und System-Nachichten benutzt wird (z.B. `WM_SETFOCUS`, wenn das Fenster momentan im Vordergrund steht).
+Funktionsname und Parameter sind von der Windows.h Bibliotek vorgegeben. Erstellt das Fenster mit den in der Funktion definierten Merkmalen. Enthält auch die 
+Message Loop, welche zum Abfangen der Inputs und System-Nachichten benutzt wird (z.B. `WM_SETFOCUS`, wenn das Fenster momentan im Vordergrund steht).
 Diese Message Loop ermöglicht es, sollte ein bestimmtes "event" passieren, wie das Fenster wird angeklickt, code ausgeführt werden kann. Dafür ruft
 ~~~cpp
     while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -273,8 +273,8 @@ case WM_LBUTTONDOWN:
         }
         break;
 ~~~
-Dieser Code wird ausgeführt, wenn die System-Nachicht die flag `WM_LBUTTONDOWM` enthält. Diese Nachicht wird von Windoes gesendet, wenn die Linke Maustaste gedrückt wird.
-Bei diesen Nachichten werden aber auch mehr als nur die Flags der Nachichz übergeben. Jede Nachicht hat zwei weitere Parameter, welche übergeben werden: `wParam` und 
+Dieser Code wird ausgeführt, wenn die System-Nachicht die ID `WM_LBUTTONDOWM` enthält. Diese Nachicht wird von Windoes gesendet, wenn die Linke Maustaste gedrückt wird.
+Bei diesen Nachichten werden aber auch mehr als nur die IDs der Nachicht übergeben. Jede Nachicht hat zwei weitere Parameter, welche übergeben werden: `wParam` und 
 `lParam`.
 In diiesem Beispiel enthält lParam die x- und y-Koordinaten des Mauszeigers zum Zeitpunktes des Klicks. So kann man einen Mausklick in seinem Programm verarbeiten und 
 eine bestimmte Aktion ausführen, sollte der Nutzer in einem bestimmten Bereich klicken.

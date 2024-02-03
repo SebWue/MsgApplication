@@ -229,7 +229,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     static int nCharWidth = 0; // width of a character 
     static int cch = 0;        // characters in buffer 
     static int nCurChar = 0;   // index of current character 
-    static PTCHAR pchInputBuf;   // input buffer
     int cCR = 0;               // count of carriage returns 
     int nCRIndex = 0;          // index of last carriage return 
     int nVirtKey;              // virtual-key code 
@@ -266,8 +265,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_SIZE:
 
-        // Save the new width and height of the client area. 
-
+        // Save the new width and height of the client area.
         dwClientX = LOWORD(lParam);
         dwClientY = HIWORD(lParam);
         // Calculate the maximum width of a line and the 
@@ -293,8 +291,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_DESTROY:
         PostQuitMessage(0);
-
-        GlobalFree((HGLOBAL)pchInputBuf);
         UnregisterHotKey(hwnd, 0xAAAA);
         return 0;
     case WM_LBUTTONDOWN:
