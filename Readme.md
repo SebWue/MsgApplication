@@ -29,15 +29,25 @@ while (GetMessage(&msg, NULL, 0, 0) > 0)
         DispatchMessage(&msg);
     }
 ~~~
+Die *Message-Loop* besteht aus einer while-Loop, in welcher ein switch-Statement, je nach ID einer erhaltenen Systemnachicht, Code ausführt. Sollte diese Systemnachicht leer sein, 
+also nicht größer als Null, verlässt das Programm die Loop.
 
 Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
-erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht, dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
-z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesended, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). Die *Message-Loop* beansprucht den größten Teil 
-des Codes, da sie aus einem switch-Statement besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der ID und den anderen Parametern Code ausführt, 
-ohne welchen das Fenster sich nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen als in z.B. Java, wo man einfach einen Event-Listener immportieren 
-kann, welcher all dies vereinfacht. Die *Message-Loop* stoppt, sollte sie eine nachicht mit dem Wert `NULL` erhalten, da dies bedeutet, das die Ausführung des Programmes beendet ist.
-Solte das Programm nun durch eine Sytemnachicht registirieren, das Enter gedrückt worden ist und der Nutzer vorher einen Text eingegeben hat, wird der eingegebene Text mithilfe der 
-Klasse `enderyp.h` verschlüsselt und im Anschluss direkt wieder entschlüsselt und im Fenster ausgegeben. 
+erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht: dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
+z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesendet, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). 
+Besonders Wichtig in meinem Programm sind die IDs `WM_CHAR` und `WM_PAINT`. `WM_CHAR` wird, wie oben schon erwähnt, vom System gesendet, wenn eine Taste auf der Tastatur gedrückt wurde,
+wobei bei dieser Nachicht `wParam` den Key-Code der Taste enthält. Sollte die *Message-Loop* nun also eine Nachicht mit der ID `WM_CHAR` erhalten, wird mit einem weiteren 
+switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wurde. Sollte dies der Fall sein, wird der Eingegebene Text nach der Funktion der Taste entsprechend 
+geändert. Sollte aber *Enter* gedrückt worden sein, so wird der eingegebene Text mit der Klasse `endecryp` verschlüsselt. Sollte kein Sonderzeichen gedrückt worden sein, wird der Wert
+von `wParam` einfach an den eingegebenen Text angehängt. Im Anschluss wird unabhängig von der Tastatureingabe die Funktion `InvalidateRect()` aufgerufen, welche dem Betriebssystem einen
+Bereich im Fenster gibt, welcher als "invalid" markiert wird. Das heißt, dass bei dem nächsten Aufruf von `WM_PAINT` dieser Bereich neu beschrieben werden muss. Aus diesem Grund ist
+`WM_PAINT` ebenfalls eine wichtige Nachicht für mein Programm. Sollte eine Nachicht mit der ID `WM_PAINT` registiert werden, signalisiert dies, dass das Fenster neu beschrieben werden
+soll. Nur der Aufruf vn `WM_PAINT` veranlasst jedoch noch nicht, dass das ganze Fenster neu beschrieben werden soll, da unter Windows, die daten eines Fensters geändert werden können,
+z.B. ein neuen Strich malen, diese Änderung jedoch nur sichbar wird, sollte man dem Betriebssystem mitteilen, das ein bestimmter Bereich neu beschrieben werden soll. Dies tut
+InvalidateRect(). Sollte ich also InvalidateRect() nach einer Änderung von z.B. Text welche ausgegeben werden soll nicht aufrufe und selber die Nachicht `WM_PAINT` versenden, passiert die
+Änderung zwar, ist jedoch nicht sichtbar, da Windows das Fenster noch nicht neu beschrieben hat. Sollte die *Message-Loop* eine Nachicht mit der ID `WM_PAINT` registrieren, 
+wird der Code in dem `case WM_PAINT:` Statement ausgeführt, was dazu führt, das dort alle Funktionen, welche das Fenster verändern, wie `DrawTextW()`, aufgerufen werden.
+Die Systemnachicht `WM_PAINT` wird immer am Ende von `InvalidateRect()` gesendet.
 
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
 gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die

@@ -494,6 +494,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             else {
                 MessageBox(hwnd, L"OVERFLOW, TOO MANY CHARACTERS", L"WARNING: OVERFLOW", NULL);
                 overflow = true;
+                in.pop_back();
                 break; 
             }
             if (decry.size() != NULL) {
