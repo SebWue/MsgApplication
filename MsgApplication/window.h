@@ -3,6 +3,5 @@ class window
 {
 public:
 	void create();
-	void deployRecivedMsg();
 };
 

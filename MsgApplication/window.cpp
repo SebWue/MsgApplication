@@ -56,7 +56,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     // Run the message loop. Like an event handler
     CreateFont(15, NULL, NULL, NULL, FW_DONTCARE, 0, 0, 0,0,0,0,0,0,0);
     MSG msg = {  };
-
+   
     while (GetMessage(&msg, NULL, 0, 0) > 0)
     {
         TranslateMessage(&msg);
@@ -479,7 +479,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
                 SetRect(&rc, 200, 600, dwLineLen, dwClientY);
                 //DrawTextW takes only NULL terminated Strings. So to not get unexpectet results, we need to nullterminate the vector with saved shit
-                if (in.size() == 0) {
+                if (in.size() == NULL) {
                     DrawTextW(hdc, L"Message", -1, &rc, DT_LEFT);
                 }
                 in.push_back(L'\0');

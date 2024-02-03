@@ -13,18 +13,31 @@ Der RSA-Algorythmus wird nicht zum Ver- und Entschlüsseln von z.B. langen Texten
 symmetrischen Schlüsseln und der Autentifizierung von z.B. Webseiten zwischen zwei Geräten.
 
 ## Aufbau des Programmes MsgApplication
-Zur Veranschaulichung des Programmaufbaues ist nachfolgend ein Flussdiagramm dargestellt.
+Zur Veranschaulichung des Programmaufbaues ist nachfolgend ein Flussdiagramm dargestellt, anhand dessen das Programm erläutert wird.
+
 ![Flowchart Program](image/flowchart.png "Flowchart")
-Das Programm erstellt zu Beginn ein Fenster, in dem Text eingegeben werden kann. Für die Erstellung des Fensters, benutze ich die `windows.h` Bibilothek.
-Danach geht das Programm in die *Message-Loop*, um auf Systemnachichten zu reagieren. Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
+
+Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung eines Schlüsselpaars. Dazu wird die Funktion `newThreadToCheck()` aus der Klasse `generateKey.h` aufgerufen. 
+Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
+benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. 
+Danach startet das Programm die *Message-Loop*, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
+
+~~~cpp
+while (GetMessage(&msg, NULL, 0, 0) > 0)
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+~~~
+
+Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
 erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht, dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
 z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesended, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). Die *Message-Loop* beansprucht den größten Teil 
-des Codes, da sie aus einem 
-switch-Statement besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der ID und den anderen Parametern Code ausführt, ohne welchen das Fenster sich 
-nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen als in z.B. Java, wo man einfach einen Event-Listener immportieren kann, welcher all dies 
-vereinfacht. Dies ist vorallem herausfordernd, sollte man noch nicht so gut mit der Bibilotek umgehen können, wie es bei mir der Fall war.
-
-
+des Codes, da sie aus einem switch-Statement besteht, was durch die einzelnen Parameter der Systemnachicht geht und basierend auf der ID und den anderen Parametern Code ausführt, 
+ohne welchen das Fenster sich nach einer Tastatureingabe nicht ändern würde. Dies ist in C++ Zeitintensiver zu machen als in z.B. Java, wo man einfach einen Event-Listener immportieren 
+kann, welcher all dies vereinfacht. Die *Message-Loop* stoppt, sollte sie eine nachicht mit dem Wert `NULL` erhalten, da dies bedeutet, das die Ausführung des Programmes beendet ist.
+Solte das Programm nun durch eine Sytemnachicht registirieren, das Enter gedrückt worden ist und der Nutzer vorher einen Text eingegeben hat, wird der eingegebene Text mithilfe der 
+Klasse `enderyp.h` verschlüsselt und im Anschluss direkt wieder entschlüsselt und im Fenster ausgegeben. 
 
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
 gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die
