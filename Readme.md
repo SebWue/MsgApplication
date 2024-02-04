@@ -21,7 +21,7 @@ Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung 
 Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
 benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Das 
 Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
-![Screenshot vom Fenster](image/MsgApplication_screen)
+![Screenshot vom Fenster](image/MsgApplication_screen.png)
 Danach startet das Programm die *Message-Loop*, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
