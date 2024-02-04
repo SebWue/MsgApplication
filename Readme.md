@@ -59,7 +59,7 @@ Bereich löschen und mache dann einen Aufruf, welcher den gelöschten Bereich mit 
 
 ## Nächste Schritte
 Als nächstes kann man noch eine Block-Chiffren Verschlüsselung implementieren und mithilfe eines Servers das Programm in ein Chat-Portal verwandeln. Dies war auch mein ursprünglicher Plan,
-jedoch hatte ich für die verwirklichung nicht genug Zeit, da die Klasse `clacW.h` zu implementieren und ein Interaktives Fenster zu erstellen deutlich Zeitaufwendiger waren, als gedacht.s
+jedoch hatte ich für die Verwirklichung nicht genug Zeit, da die Klasse `clacW.h` zu implementieren und ein Interaktives Fenster zu erstellen deutlich Zeitaufwendiger war, als gedacht.
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
