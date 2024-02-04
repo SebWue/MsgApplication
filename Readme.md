@@ -3,7 +3,7 @@
 ## Idee des Programmes
 Die Idee des Programmes ist, das der Benutzter einen Text in einem interaktiven Fenster eingeben kann, welcher anschließend mit dem
 RSA-Algorythmus verschlüsselt wird. RSA steht für Rivest-Shamir-Adleman, die Erfinder dieser asymmetrischen Verschlüsselungstechnik. Um diese Idee umzusetzen, verwende ich 
-C++. Dies war im nachhinein nicht die beste Wahl, da das Erstellen und Ändern eines Fensters mit C++ schwieriger und zeitintensiver ist als in z.B. Java. 
+C++. Dies war im nachhinein nicht die beste Wahl, da das erstellen und Ändern eines Fensters mit C++ schwieriger und zeitintensiver ist als in z.B. Java. 
 Weiterhin muss man bei der RSA-Verschlüsselung eine große Zahl mit einer anderen großen Zahl potentieren, was zu riesigen Zahlen führt. Um diese Zahlen zu 
 speichern, reichen die Bitlängen der Standard Variablen nicht aus. Da C++ auch keine Bibilotek hat, welche die Speicherung und Verarbeitung dieser Ergebnisse 
 vereinfacht, musste ich mir ein Verfahren ausdenken, mit welchem sich diese Werte speichern und verarbeiten lassen, und dieses Verfahren in der Klasse 
@@ -16,18 +16,20 @@ symmetrischen Schlüsseln und der Autentifizierung von z.B. Webseiten zwischen zw
 Zur Veranschaulichung des Programmaufbaues ist nachfolgend ein Flussdiagramm dargestellt, anhand dessen das Programm erläutert wird.
 
 ![Flowchart Program](image/flowchart.png "Flowchart")
+Abbildung 1
 
 Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung eines Schlüsselpaars. Dazu wird die Funktion `newThreadToCheck()` aus der Klasse `generateKey.h` aufgerufen. 
 Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
-benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Das 
-Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
+benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Ein Screenshot
+ist in Abbildung 2 dargestellt. Das Dialog Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
 
 ![Screenshot vom Fenster](image/MsgApplication_screen.png)
+Abbildung 2
 
-Der 1. Bereich des Fensters ist der Bereich, wo die eingegebenen Buchstaben angezeigt werden. Der zweite Bereich ist am oberen linken Rand mit der Aufschrift "Generate Keys". 
+Der 1. Bereich des Fensters ist der Bereich, in dem die eingegebenen Buchstaben angezeigt werden. Der zweite Bereich ist am oberen linken Rand mit der Aufschrift "Generate Keys". 
 Sollte man das Rechteck anklicken, werden neue Schlüssel generiert. Der 3. Bereich ist der Ausgabebereich. Er ist am größten, da dort die momentan verwendeten Schlüssel, 
-der verschlüsselte Text und der wieder entschlüsselte Text ausgegeben werden. Um die Eingaben des Textes und den Klick auf das Rechteck zu regestrieren, benötigt man aber noch eine 
-Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Sie startet nach der Erstellung des des Fensters, um auf Systemnachichten zu 
+der verschlüsselte Text und der wieder entschlüsselte Text ausgegeben werden. Um die Texteingaben und den Klick auf das Rechteck zu registrieren, benötigt man aber noch eine 
+Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Sie startet nach der Erstellung des Fensters, um auf Systemnachichten zu 
 reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
@@ -43,11 +45,13 @@ also nicht größer als Null, verlässt das Programm die Loop.
 Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
 erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht: dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
 z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesendet, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). 
-Besonders Wichtig in meinem Programm sind die IDs `WM_CHAR` und `WM_PAINT`. `WM_CHAR` wird, wie oben schon erwähnt, vom System gesendet, wenn eine Taste auf der Tastatur gedrückt wurde,
+Besonders wichtig in meinem Programm sind die IDs `WM_CHAR` und `WM_PAINT`. `WM_CHAR` wird, wie oben schon erwähnt, vom System gesendet, wenn eine Taste auf der Tastatur gedrückt wurde,
 wobei bei dieser Nachicht `wParam` den Key-Code der Taste enthält. Sollte die *Message-Loop* nun also eine Nachicht mit der ID `WM_CHAR` erhalten, wird mit einem weiteren 
-switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wurde. Sollte dies der Fall sein, wird der Eingegebene Text nach der Funktion der Taste entsprechend 
+switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wurde. Sollte dies der Fall sein, wird der eingegebene Text der Tastennfunktion entsprechend 
 geändert. Sollte aber *Enter* gedrückt worden sein, so wird der eingegebene Text mit der Klasse `endecryp` verschlüsselt. Sollte kein Sonderzeichen gedrückt worden sein, wird der Wert
-von `wParam` einfach an den eingegebenen Text angehängt. Im Anschluss wird unabhängig von der Tastatureingabe die Funktion `InvalidateRect()` aufgerufen, welche dem Betriebssystem einen
+von `wParam` einfach an den eingegebenen Text angehängt. 
+
+Im Anschluss wird unabhängig von der Tastatureingabe die Funktion `InvalidateRect()` aufgerufen, welche dem Betriebssystem einen
 Bereich im Fenster gibt, welcher als "invalid" markiert wird. Das heißt, dass bei dem nächsten Aufruf von `WM_PAINT` dieser Bereich neu beschrieben werden muss. Aus diesem Grund ist
 `WM_PAINT` ebenfalls eine wichtige Nachicht für mein Programm. Sollte eine Nachicht mit der ID `WM_PAINT` registiert werden, signalisiert dies, dass das Fenster neu beschrieben werden
 soll. Nur der Aufruf vn `WM_PAINT` veranlasst jedoch noch nicht, dass das ganze Fenster neu beschrieben werden soll, da unter Windows, die daten eines Fensters geändert werden können,
@@ -219,7 +223,7 @@ Schreibt einen Integer in einen Vektor, indem der Integer modulo 10 (a % 10) ger
 `vector<int> calcW::lpow(vector<int> orignum, int power)`
 
 Erweiterung des `pow()` Befehls. Es muss eine Zahl, welche in einem Vektor gespeichert wird, und die Zahl, mit welcher die Zahl potentiert wird, eingegeben werden.
-Dies ermöglicht die Rechnung von z.B. 50234<sup>324232</sup>, wo das Ergebniss in einer üblichen Variablen Arten nicht gespeichert werden kann.
+Dies ermöglicht die Rechnung von z.B. 50234<sup>324232</sup>, wodei das Ergebniss in einer üblichen Variablen Arten nicht gespeichert werden kann.
 
 `int calcW::lmod(vector<int> orgnum, int divident)`
 
