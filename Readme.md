@@ -21,8 +21,14 @@ Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung 
 Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
 benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Das 
 Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
+
 ![Screenshot vom Fenster](image/MsgApplication_screen.png)
-Danach startet das Programm die *Message-Loop*, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
+
+Der erste Bereich des Fensters ist die Elipse, wo die eingegebenen Buchstaben angezeigt werden. Im Screenshot ist dies ganz unten zu finden, mit dem Text "Ich bin ein Beispiel". Der zweite
+Bereich ist das Rechteck am rechten Rand mit der Inschrift "Generate Keys". Sollte man das Rechteck anklicken, werden neue Schlüssel generiert. Der Letzte bereich ist der Ausgabe bereich.
+Er ist am größten, da dort die momentan verwendeten Schlüssel, der Verschlüsselte Text und der wieder entschlüsselte Text dort ausgegeben wird. Um die Eingaben des Textes und den Klick auf
+das Rechteck zu regestrieren, benötigt man aber noch eine Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Diese startet nach der
+Erstellung des des Fensters, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
 while (GetMessage(&msg, NULL, 0, 0) > 0)
