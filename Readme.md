@@ -20,17 +20,18 @@ Abbildung 1
 
 Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung eines Schlüsselpaars. Dazu wird die Funktion `newThreadToCheck()` aus der Klasse `generateKey.h` aufgerufen. 
 Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
-benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Ein Screenshot
-ist in Abbildung 2 dargestellt. Das Dialog Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
+benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum Erstellen des Dialog-Fensters benötigt. Diesen 
+Vorgang sieht man uach in der oberen Hälfte von Abbildung 1. Ein Screenshot des Fensters ist in Abbildung 2 zu finden. Das Dialog Fenster besteht aus 3 Bereichen, von welchen 2 
+interaktiv sind.
 
 ![Screenshot vom Fenster](image/MsgApplication_screen.png)
 Abbildung 2
 
 Der 1. Bereich des Fensters ist der Bereich, in dem die eingegebenen Buchstaben angezeigt werden. Der zweite Bereich ist am oberen linken Rand mit der Aufschrift "Generate Keys". 
 Sollte man das Rechteck anklicken, werden neue Schlüssel generiert. Der 3. Bereich ist der Ausgabebereich. Er ist am größten, da dort die momentan verwendeten Schlüssel, 
-der verschlüsselte Text und der wieder entschlüsselte Text ausgegeben werden. Um die Texteingaben und den Klick auf das Rechteck zu registrieren, benötigt man aber noch eine 
+der verschlüsselte Text und der wieder entschlüsselte Text ausgegeben werden (siehe Abb. 2). Um die Texteingaben und den Klick auf das Rechteck zu registrieren, benötigt man aber noch eine 
 Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Sie startet nach der Erstellung des Fensters, um auf Systemnachichten zu 
-reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
+reagieren und ist in Abb. 1 mit blauen Pfelien markiert. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
 while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -44,30 +45,27 @@ also nicht größer als Null, verlässt das Programm die Loop.
 
 Systemnachichten werden vom Betriebssystem bei z.B. Tastatureingaben oder Windows-internen Aktionen
 erzeugt und bestehen aus 3 Parametern: `UINT uMsg` = ID der Nachricht: dient der Herausfilterung der Nachicht; `WPARAM wParam` und `LPARAM lParam` = enthalten extra Informationen, 
-z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesendet, wenn eine Taste gedrückt wird), enthält wParam den eingegebenen Buchstaben). 
-Besonders wichtig in meinem Programm sind die IDs `WM_CHAR` und `WM_PAINT`. `WM_CHAR` wird, wie oben schon erwähnt, vom System gesendet, wenn eine Taste auf der Tastatur gedrückt wurde,
+z.B. bei der Nachicht mit der ID `WM_CHAR` (wird gesendet, wenn eine Taste gedrückt wird) enthält `wParam` den eingegebenen Buchstaben. 
+Besonders wichtig in meinem Programm sind die IDs `WM_CHAR` und `WM_PAINT`, welche in Abbildung 1 auch nochmal hervorgehoben sind. `WM_CHAR` wird, wie oben schon erwähnt, vom System gesendet, wenn eine Taste auf der Tastatur gedrückt wurde,
 wobei bei dieser Nachicht `wParam` den Key-Code der Taste enthält. Sollte die *Message-Loop* nun also eine Nachicht mit der ID `WM_CHAR` erhalten, wird mit einem weiteren 
-switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wurde. Sollte dies der Fall sein, wird der eingegebene Text der Tastennfunktion entsprechend 
-geändert. Sollte aber *Enter* gedrückt worden sein, so wird der eingegebene Text mit der Klasse `endecryp` verschlüsselt. Sollte kein Sonderzeichen gedrückt worden sein, wird der Wert
-von `wParam` einfach an den eingegebenen Text angehängt. 
+switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wurde. Sollte dies der Fall sein, wird der im 1. Bereich des Dialogfensters eingegebene Text der
+Tastennfunktion entsprechend geändert. Sollte aber *Enter* gedrückt worden sein, so wird der eingegebene Text mit der Klasse `endecryp` verschlüsselt, siehe Abbildung 1, switch(wParam). 
+Sollte kein Sonderzeichen gedrückt worden sein, wird der Wert von `wParam` einfach an den eingegebenen Text angehängt. 
 
-Im Anschluss wird unabhängig von der Tastatureingabe die Funktion `InvalidateRect()` aufgerufen, welche dem Betriebssystem einen
-Bereich im Fenster gibt, welcher als "invalid" markiert wird. Das heißt, dass bei dem nächsten Aufruf von `WM_PAINT` dieser Bereich neu beschrieben werden muss. Aus diesem Grund ist
-`WM_PAINT` ebenfalls eine wichtige Nachicht für mein Programm. Sollte eine Nachicht mit der ID `WM_PAINT` registiert werden, signalisiert dies, dass das Fenster neu beschrieben werden
-soll. Nur der Aufruf vn `WM_PAINT` veranlasst jedoch noch nicht, dass das ganze Fenster neu beschrieben werden soll, da unter Windows, die daten eines Fensters geändert werden können,
-z.B. ein neuen Strich malen, diese Änderung jedoch nur sichbar wird, sollte man dem Betriebssystem mitteilen, das ein bestimmter Bereich neu beschrieben werden soll. Dies tut
-InvalidateRect(). Sollte ich also InvalidateRect() nach einer Änderung von z.B. Text welche ausgegeben werden soll nicht aufrufe und selber die Nachicht `WM_PAINT` versenden, passiert die
-Änderung zwar, ist jedoch nicht sichtbar, da Windows das Fenster noch nicht neu beschrieben hat. Sollte die *Message-Loop* eine Nachicht mit der ID `WM_PAINT` registrieren, 
-wird der Code in dem `case WM_PAINT:` Statement ausgeführt, was dazu führt, das dort alle Funktionen, welche das Fenster verändern, wie `DrawTextW()`, aufgerufen werden.
-Die Systemnachicht `WM_PAINT` wird immer am Ende von `InvalidateRect()` gesendet.
-
+Die Änderungen im 1. Bereich des Dialogfenster werden nicht automatisch sichtbar, da das Betriebssystem nicht automatisch das Fenster neu zeichnet. Damit dies geschieht, wird die
+Funktion `InvalidateRect()`, die die Systemnachricht mit der ID `WM_PAINT` verschickt, aufgerufen. Davor definiert `InvalidateRect()` einen Bereich des Fensters als "invalid".
+Um den Inhalt zu aktualisieren, wird der aktuelle Inhalt im definierten Bereich gelöscht und die Nachicht `WM_PAINT`, da in `case WM_PAINT:` die 
+formgebenden Funktionen des Fensters sind. Nun geht das Programm durch die Funktionen in `WM_PAINT` und zeichnet die Strukturen, welche in dem invalidierten Bereich definiert sind.
+Z.B. wenn ich die Fläche von x = 0 bis 200 und y = 0 bis 100 in die Funktion `InvalidateRect()` eingebe, und ein Rechteck im Fenster von x = 20 bis 500 und 50 bis 90 definiert ist aber nicht gezeichnet ist,
+wird nun das Rechteck nur von x = 20 bis 200 und y = 50 bis 100 gezeichnet, da um den Rest des Rechtecks zu zeichnen eine Fläche von z.B. x = 0 bis 600 und y = 0 bis 200 "invalidiert" 
+werden müsste.
 
 ## Nächste Schritte
 Das Programm ist noch lange nicht so, wie ich es mir vorgestellt habe. Es fehlen noch viele Erweiterungen, die dieses Programm tatsächlich sinnvoll machen würden. So könnte man noch eine
-Blockschiffren-Verschlüsselung implementieren und einen Server aufsetzten, um z.B. Nachichten von einem Gerät, über den Server, zu einem anderen schicken zu können. Dazu wäre die
-RSA-Verschlüsselung zwar nicht gut geeignet, jedoch könnte man sie nutzten, um einen sicheren Schlüsselaustausch der Symmetrischen Schlüssel der Blockschiffre zwischen den Geräten zu 
-gewährleisten. Dies ist aber mindestens nochmal so aufwendig, wie die RSA-Verschlüsselung zu implementieren. Da ich aber so viel Zeit für die Erstellung und Sicherstellung der 
-Funktionalität des Fensters, sowie die Implemetierung einer Möglichkeit mit großen Zahlen in Vektoren zu rechnen, benötigt habe, habe ich nicht genug Zeit für diese Änderungen gehabt.#
+Block-Chiffren-Verschlüsselung implementieren und einen Server aufsetzten, um z.B. Nachichten von einem Gerät, über den Server, zu einem anderen schicken zu können. Dazu wäre die
+RSA-Verschlüsselung zwar nicht gut geeignet, jedoch könnte man sie nutzten, um einen sicheren Schlüsselaustausch der Symmetrischen Schlüssel der Block-Chiffre zwischen den Geräten zu 
+gewährleisten. Dies ist aber mindestens nochmal so aufwändig, wie die RSA-Verschlüsselung zu implementieren. Da ich aber so viel Zeit für die Erstellung und Sicherstellung der 
+Funktionalität des Fensters, sowie die Implemetierung einer Möglichkeit mit großen Zahlen in Vektoren zu rechnen, benötigt habe, habe ich nicht genug Zeit für diese Änderungen gehabt.
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
@@ -107,12 +105,11 @@ Genauere Erklärung in [window.cpp](#windowcpp)
 ### generateKey.cpp
 Klasse, welche ein kompatibles Schlüsselpaar erstellt
 
-`void generateKey::newThreadToCheck()`
+`void generateKey::newThreadToCheck()` //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Diese Funktion wird der Klasse aus MsgApplication aufgerufen. Sie prüft, ob schon ein Schlüssel vorliegt. Sollte dies nicht der Fall sein, 
-wird ein neues Schlüsselpaar erstellt (bisher wird der generierte Schlüssel noch nicht gespeichert).
-Sollte kein Schlüssel vorliegen, wird die Funktion `generate()` aufgerufen, welche die Schlüssel generiert.
-Anschließend werden die generierten Schlüssel in der Funktion `setKeys()` an die Klasse `endecrypt()` übergeben, dort gespeichert und anschließend zum ver- und entschlüsseln benutzt.
+Diese Funktion prüft, ob schon ein Schlüssel vorliegt. Sollte dies nicht der Fall sein, 
+wird, durch einen Aufruf von `generate()` ein neues Schlüsselpaar generiert (bisher wird der generierte Schlüssel noch nicht gespeichert).
+Anschließend werden die Schlüssel in der Funktion `setKeys()` an die Klasse `endecrypt()` übergeben, dort gespeichert und anschließend zum ver- und entschlüsseln benutzt.
 
 `void generateKey::generate()`
 
