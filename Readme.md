@@ -24,11 +24,11 @@ Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
 
 ![Screenshot vom Fenster](image/MsgApplication_screen.png)
 
-Der erste Bereich des Fensters ist die Elipse, wo die eingegebenen Buchstaben angezeigt werden. Im Screenshot ist dies ganz unten zu finden, mit dem Text "Ich bin ein Beispiel". Der zweite
-Bereich ist das Rechteck am rechten Rand mit der Inschrift "Generate Keys". Sollte man das Rechteck anklicken, werden neue Schlüssel generiert. Der Letzte bereich ist der Ausgabe bereich.
-Er ist am größten, da dort die momentan verwendeten Schlüssel, der Verschlüsselte Text und der wieder entschlüsselte Text dort ausgegeben wird. Um die Eingaben des Textes und den Klick auf
-das Rechteck zu regestrieren, benötigt man aber noch eine Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Diese startet nach der
-Erstellung des des Fensters, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
+Der erste Bereich des Fensters ist die Elipse, wo die eingegebenen Buchstaben angezeigt werden. Der zweite Bereich ist das Rechteck am rechten Rand mit der Inschrift "Generate Keys". 
+Sollte man das Rechteck anklicken, werden neue Schlüssel generiert. Der letzte Bereich ist der Ausgabebereich. Er ist am größten, da dort die momentan verwendeten Schlüssel, 
+der verschlüsselte Text und der wieder entschlüsselte Text dort ausgegeben wird. Um die Eingaben des Textes und den Klick auf das Rechteck zu regestrieren, benötigt man aber noch eine 
+Möglichkeit Events wie einen Mausklick wahrzunehmen. Dies macht man in C++ mit der *Message Loop*. Diese startet nach der Erstellung des des Fensters, um auf Systemnachichten zu 
+reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
 while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -57,10 +57,18 @@ InvalidateRect(). Sollte ich also InvalidateRect() nach einer Änderung von z.B. 
 wird der Code in dem `case WM_PAINT:` Statement ausgeführt, was dazu führt, das dort alle Funktionen, welche das Fenster verändern, wie `DrawTextW()`, aufgerufen werden.
 Die Systemnachicht `WM_PAINT` wird immer am Ende von `InvalidateRect()` gesendet.
 
+
+## Nächsten Schritte
+Das Programm ist noch lange nicht so, wie ich es mir vorgestellt habe. Es fehlen noch viele Erweiterungen, die dieses Programm tatsächlich sinnvoll machen würden. So könnte man noch eine
+Blockschiffren-Verschlüsselung implementieren und einen Server aufsetzten, um z.B. Nachichten von einem Gerät, über den Server, zu einem anderen schicken könnte. Dazu wäre die
+RSA-VErschlüsselung zwar nicht gut geeignet, jedoch könnte man sie nutzten, um einen sicheren Schlüsselaustausch der Symmetrischen Schlüssel der Blockschiffre zwischen den Geräten zu 
+gewährleisten. Dies ist aber mindestens nochmal so aufwendig, wie die RSA-Verschlüsselung zu implementieren. Da ich aber so viel Zeit für die Erstellung und Sylung des Fensters, sowie
+die Klasse `calcW.h` benötigt habe, habe ich nicht genug Zeit für solche Änderungen gehabt.
+
 Mir ist auch bewusst, dass das Fenster noch lange nicht "gut" aussieht, jedoch hatte ich mich mit dem Design des Fensters erst
-gegen Ende beschäftigt, da die Klasse calcW zu schreiben, sehr viel anspruchsvoller war als gedacht (ich habe mich fast die
+gegen Ende beschäftigt, da die Klasse `calcW.h` zu schreiben, sehr viel anspruchsvoller war als gedacht. Ich habe mich fast die
 gesammten Winterferien damit beschäftigt diese Klasse zu schreiben, da in C++ keine Bibilotek existiert, welche die Berechnung
-von großen Zahlen in vereinfacht).
+von großen Zahlen in vereinfacht.
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
