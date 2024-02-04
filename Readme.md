@@ -1,8 +1,8 @@
 # Dokumentation MsgApplication
 
 ## Idee des Programmes
-Die Idee des Programmes ist, das der Benutzter einen Text in einem interaktiven Fenster eingeben kann, welcher, sollte der Nutzer Enter drücken, mit 
-RSA verschlüsselt wird. RSA steht für Rivest-Shamir-Adleman, die Erfinder dieser asymetrischen Verschlüsselungstechnik. Um diese Idee umzusetzen, verwende ich 
+Die Idee des Programmes ist, das der Benutzter einen Text in einem interaktiven Fenster eingeben kann, welcher anschließend mit dem
+RSA-Algorythmus verschlüsselt wird. RSA steht für Rivest-Shamir-Adleman, die Erfinder dieser asymmetrischen Verschlüsselungstechnik. Um diese Idee umzusetzen, verwende ich 
 C++. Dies war im nachhinein nicht die beste Wahl, da das Erstellen und Ändern eines Fensters mit C++ schwieriger und zeitintensiver ist als in z.B. Java. 
 Weiterhin muss man bei der RSA-Verschlüsselung eine große Zahl mit einer anderen großen Zahl potentieren, was zu riesigen Zahlen führt. Um diese Zahlen zu 
 speichern, reichen die Bitlängen der Standard Variablen nicht aus. Da C++ auch keine Bibilotek hat, welche die Speicherung und Verarbeitung dieser Ergebnisse 
@@ -19,7 +19,9 @@ Zur Veranschaulichung des Programmaufbaues ist nachfolgend ein Flussdiagramm dar
 
 Das Programm startet aus dem Hauptprogramm MsgApplication.cpp mit der Erzeugung eines Schlüsselpaars. Dazu wird die Funktion `newThreadToCheck()` aus der Klasse `generateKey.h` aufgerufen. 
 Im Anschluss wird ein Dialog-Fenster erstellt, in dem Text eingegeben werden kann. Dafür wird die Funktion create() aus der selbst geschriebenen Klasse `window.h` aufgerufen. Diese Klasse 
-benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. 
+benutzt für die Erstellung des Fensters die `windows.h` Bibilothek. `windows.h` beinhalted fast alle Funktionen, welche das Programm zum erstellen des Dialog-Fensters benötigt. Das 
+Fenster besteht aus 3 Bereichen, von welchen 2 interaktiv sind.
+![Screenshot vom Fenster](image/MsgApplication_screen)
 Danach startet das Programm die *Message-Loop*, um auf Systemnachichten zu reagieren. Die *Message Loop* wird mit dem folgenden Code aktiviert (window.cpp: Z.60 - 64):
 
 ~~~cpp
