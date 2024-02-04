@@ -35,10 +35,10 @@ reagieren und ist in Abb. 1 mit blauen Pfelien markiert. Die *Message Loop* wird
 
 ~~~cpp
 while (GetMessage(&msg, NULL, 0, 0) > 0)
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 ~~~
 Die *Message-Loop* besteht aus einer while-Loop, in welcher ein switch-Statement, je nach ID einer erhaltenen Systemnachicht, Code ausführt. Sollte diese Systemnachicht leer sein, 
 also nicht größer als Null, verlässt das Programm die Loop.
@@ -52,20 +52,14 @@ switch-Statement geprüft, ob ein Sonderzeichen, wie z.B. *Backspace* gedrückt wu
 Tastennfunktion entsprechend geändert. Sollte aber *Enter* gedrückt worden sein, so wird der eingegebene Text mit der Klasse `endecryp` verschlüsselt, siehe Abbildung 1, switch(wParam). 
 Sollte kein Sonderzeichen gedrückt worden sein, wird der Wert von `wParam` einfach an den eingegebenen Text angehängt. 
 
-Die Änderungen im 1. Bereich des Dialogfenster werden nicht automatisch sichtbar, da das Betriebssystem nicht automatisch das Fenster neu zeichnet. Damit dies geschieht, wird die
-Funktion `InvalidateRect()`, die die Systemnachricht mit der ID `WM_PAINT` verschickt, aufgerufen. Davor definiert `InvalidateRect()` einen Bereich des Fensters als "invalid".
-Um den Inhalt zu aktualisieren, wird der aktuelle Inhalt im definierten Bereich gelöscht und die Nachicht `WM_PAINT`, da in `case WM_PAINT:` die 
-formgebenden Funktionen des Fensters sind. Nun geht das Programm durch die Funktionen in `WM_PAINT` und zeichnet die Strukturen, welche in dem invalidierten Bereich definiert sind.
-Z.B. wenn ich die Fläche von x = 0 bis 200 und y = 0 bis 100 in die Funktion `InvalidateRect()` eingebe, und ein Rechteck im Fenster von x = 20 bis 500 und 50 bis 90 definiert ist aber nicht gezeichnet ist,
-wird nun das Rechteck nur von x = 20 bis 200 und y = 50 bis 100 gezeichnet, da um den Rest des Rechtecks zu zeichnen eine Fläche von z.B. x = 0 bis 600 und y = 0 bis 200 "invalidiert" 
-werden müsste.
+Die Änderungen im 1. und 3. Bereich des Dialogfensters werden nicht automatisch sichtbar (siehe Abb. 2), da das Betriebssystem nicht automatisch das Fenster neu zeichnet. Damit dies geschieht, definiert 
+`InvalidateRect()` den zu aktualisierenden Bereich des Fensters als "invalid" und er wird gelöscht. Da das Fenster aber aktuallisiert werden
+soll, wird die Systemnachicht mit der ID `WM_PAINT` geschickt, welche dafür sorgt, dass der gelöschte Bereich aktualisiert und neu gezeichnet wird. Zusammengefasst: Ich lasse mir den alten 
+Bereich löschen und mache dann einen Aufruf, welcher den gelöschten Bereich mit aktualisiertem Inhalt neu zeichnet.
 
 ## Nächste Schritte
-Das Programm ist noch lange nicht so, wie ich es mir vorgestellt habe. Es fehlen noch viele Erweiterungen, die dieses Programm tatsächlich sinnvoll machen würden. So könnte man noch eine
-Block-Chiffren-Verschlüsselung implementieren und einen Server aufsetzten, um z.B. Nachichten von einem Gerät, über den Server, zu einem anderen schicken zu können. Dazu wäre die
-RSA-Verschlüsselung zwar nicht gut geeignet, jedoch könnte man sie nutzten, um einen sicheren Schlüsselaustausch der Symmetrischen Schlüssel der Block-Chiffre zwischen den Geräten zu 
-gewährleisten. Dies ist aber mindestens nochmal so aufwändig, wie die RSA-Verschlüsselung zu implementieren. Da ich aber so viel Zeit für die Erstellung und Sicherstellung der 
-Funktionalität des Fensters, sowie die Implemetierung einer Möglichkeit mit großen Zahlen in Vektoren zu rechnen, benötigt habe, habe ich nicht genug Zeit für diese Änderungen gehabt.
+Als nächstes kann man noch eine Block-Chiffren Verschlüsselung implementieren und mithilfe eines Servers das Programm in ein Chat-Portal verwandeln. Dies war auch mein ursprünglicher Plan,
+jedoch hatte ich für die verwirklichung nicht genug Zeit, da die Klasse `clacW.h` zu implementieren und ein Interaktives Fenster zu erstellen deutlich Zeitaufwendiger waren, als gedacht.s
 
 ## Benutzte Klassen
 ### Auflistung aller selbstgeschriebenen und benutzten Klassen in dem Programm
@@ -282,11 +276,11 @@ Message Loop, welche zum Abfangen der Inputs und System-Nachichten benutzt wird 
 Sollte System-Nachicht mit einer ID registriert werden, wird Code ausgeführt.
 
 ~~~cpp
-    while (GetMessage(&msg, NULL, 0, 0) > 0)
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+	while (GetMessage(&msg, NULL, 0, 0) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 ~~~
 DispatchMessage()  ruft die Funktion `LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)` auf, welche ein langes switch-Statement enthält, 
 wodurch die System-Nachichten herausgefiltert werden und ein der Nachicht entsprechend Code ausgeführt werden kann.
@@ -294,16 +288,16 @@ Bsp:
 ~~~cpp
 case WM_LBUTTONDOWN:
 
-        xPos = GET_X_LPARAM(lParam);
-        yPos = GET_Y_LPARAM(lParam);
-        if (xPos > 0 && xPos < 200 && yPos > 50 && yPos < 100) {
-            getKeys.newThreadToCheck();
-            keys = 1;
-            SetRect(&rc, 0, 0, 1200, 700);
-            InvalidateRect(hwnd, &rc, TRUE);
-            cout << "HIT";
-        }
-        break;
+		xPos = GET_X_LPARAM(lParam);
+		yPos = GET_Y_LPARAM(lParam);
+		if (xPos > 0 && xPos < 200 && yPos > 50 && yPos < 100) {
+			getKeys.newThreadToCheck();
+			keys = 1;
+			SetRect(&rc, 0, 0, 1200, 700);
+			InvalidateRect(hwnd, &rc, TRUE);
+			cout << "HIT";
+		}
+		break;
 ~~~
 Dieser Code wird ausgeführt, wenn die System-Nachicht die ID `WM_LBUTTONDOWM` enthält. Diese Nachicht wird von Windows gesendet, wenn die Linke Maustaste gedrückt wird.
 Bei dieser Nachicht wird aber auch mehr als nur die ID der Nachicht übergeben. Jede Nachicht hat zwei weitere Parameter, welche übergeben werden: `wParam` und 
